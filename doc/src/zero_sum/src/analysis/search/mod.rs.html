@@ -122,6 +122,10 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
 </pre><pre class='rust '>
 <span class='comment'>//</span>
 <span class='comment'>// This file is part of zero_sum.</span>
@@ -187,7 +191,11 @@
     <span class='ident'>R</span>: <span class='ident'>Resolution</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;State: {}\n&quot;</span>, <span class='self'>self</span>.<span class='ident'>state</span>));
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Evaluation: {}\n&quot;</span>, <span class='self'>self</span>.<span class='ident'>evaluation</span>));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Evaluation: {}{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>evaluation</span>, <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>evaluation</span>.<span class='ident'>is_win</span>() {
+            <span class='string'>&quot; (Win)\n&quot;</span>
+        } <span class='kw'>else</span> {
+            <span class='string'>&quot;\n&quot;</span>
+        }));
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Principal Variation:&quot;</span>));
         <span class='kw'>for</span> <span class='ident'>ply</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>principal_variation</span> {
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n  {}&quot;</span>, <span class='ident'>ply</span>));
