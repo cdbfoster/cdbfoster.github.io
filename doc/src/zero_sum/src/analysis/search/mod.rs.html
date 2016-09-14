@@ -126,6 +126,10 @@
 <span id="82">82</span>
 <span id="83">83</span>
 <span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
 </pre><pre class='rust '>
 <span class='comment'>//</span>
 <span class='comment'>// This file is part of zero_sum.</span>
@@ -191,6 +195,10 @@
     <span class='ident'>R</span>: <span class='ident'>Resolution</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;State: {}\n&quot;</span>, <span class='self'>self</span>.<span class='ident'>state</span>));
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>result</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>execute_plies</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>principal_variation</span>) {
+            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Resultant State: {}\n&quot;</span>, <span class='ident'>result</span>));
+            <span class='comment'>// XXX Make Resolution require Display and print the resolution if any</span>
+        }
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Evaluation: {}{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>evaluation</span>, <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>evaluation</span>.<span class='ident'>is_win</span>() {
             <span class='string'>&quot; (Win)\n&quot;</span>
         } <span class='kw'>else</span> {
@@ -201,10 +209,10 @@
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n  {}&quot;</span>, <span class='ident'>ply</span>));
         }
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>stats</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>stats</span> {
-            <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\nStatistics:\n{}&quot;</span>, <span class='ident'>stats</span>)
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>Ok</span>(())
+            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\nStatistics:\n{}&quot;</span>, <span class='ident'>stats</span>));
         }
+
+        <span class='prelude-val'>Ok</span>(())
     }
 }
 
