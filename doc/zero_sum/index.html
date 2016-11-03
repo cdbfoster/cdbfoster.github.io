@@ -47,25 +47,39 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/zero_sum/src/lib.rs.html#20-71' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/zero_sum/src/lib.rs.html#20-97' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>An analysis engine for zero-sum games.</p>
 
 <p>This crate provides a number of traits that can be used to facilitate the
 implementation of a zero-sum game, and to allow the analysis thereof.</p>
+
+<p>Also provided through the use of optional features are implementations
+for tic-tac-toe and the game of <a href="http://cheapass.com/tak/">tak</a>.</p>
 
 <h1 id='usage' class='section-header'><a href='#usage'>Usage</a></h1>
 <p>This crate is <a href="https://crates.io/crates/zero_sum">on crates.io</a> and can be
 used by adding <code>zero_sum</code> to the dependencies in your project&#39;s <code>Cargo.toml</code>.</p>
 
 <pre><code class="language-toml">[dependencies]
-zero_sum = &quot;0.2&quot;
+zero_sum = &quot;1.0&quot;
 </code></pre>
 
 <p>and add this to your crate root:</p>
 
 <pre class='rust rust-example-rendered'>
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>zero_sum</span>;</pre>
+
+<p>If you want to implement the library, you&#39;ll need to include a <code>#[macro_use]</code>
+line before <code>extern crate zero_sum;</code></p>
+
+<p>If you want to use one of the implementations provided inside the <code>zero_sum::impls</code>
+module, you&#39;ll need to specify the appropriate features in your project&#39;s <code>Cargo.toml</code>:</p>
+
+<pre><code class="language-toml">[features]
+default = [ &quot;zero_sum/with_tak&quot; ]
+</code></pre>
+
+<p>for instance, to include the <code>tak</code> module.</p>
 
 <h1 id='implementation' class='section-header'><a href='#implementation'>Implementation</a></h1>
 <p>The three basic traits are <code>Ply</code>, <code>Resolution</code>, and <code>State</code>.  These form
@@ -77,7 +91,8 @@ with <code>analysis::Evaluation</code>, and implement <code>analysis::Evaluatabl
 <code>analysis::Extrapolatable</code> on the <code>State</code> type.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
-<p>A working example can be found in <a href="https://github.com/cdbfoster/zero_sum/blob/master/examples/tic_tac_toe.rs">examples/tic_tac_toe.rs</a>.</p>
+<p>The provided tic-tac-toe implementation is very simple and a usage example can
+be found in <a href="https://github.com/cdbfoster/zero_sum/blob/master/examples/tic_tac_toe.rs">examples/tic_tac_toe.rs</a>.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -86,15 +101,15 @@ with <code>analysis::Evaluation</code>, and implement <code>analysis::Evaluatabl
                            <td class='docblock short'>
                                 <p>Contains the traits and tools to provide analysis of zero-sum games.</p>
                            </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='impls/index.html'
+                                  title='zero_sum::impls'>impls</a></td>
+                           <td class='docblock short'>
+                                <p>Contains implementations of the library for a few zero-sum games.</p>
+                           </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='macro' href='macro.impl_tuple_operation.html'
-                                  title='zero_sum::impl_tuple_operation'>impl_tuple_operation</a></td>
-                           <td class='docblock short'>
-                                <p>Implement a binary operation for a tuple struct in terms of the enclosed type.</p>
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class='macro' href='macro.prepare_evaluation_tuple.html'
                                   title='zero_sum::prepare_evaluation_tuple'>prepare_evaluation_tuple</a></td>

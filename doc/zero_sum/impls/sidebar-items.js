@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["tak","The game of tak."],["tic_tac_toe","The game of tic-tac-toe."]]});

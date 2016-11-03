@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-556' class='srclink' href='../src/zero_sum/src/state.rs.html#81-113' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1982' class='srclink' href='../src/zero_sum/src/state.rs.html#82-114' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait State&lt;P,&nbsp;R&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> <span class='where'>where P: <a class='trait' href='../zero_sum/trait.Ply.html' title='zero_sum::Ply'>Ply</a>, R: <a class='trait' href='../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a></span> {
     fn <a href='#tymethod.execute_ply_preallocated' class='fnname'>execute_ply_preallocated</a>(&amp;self, ply: &amp;P, next: &amp;mut Self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>,&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
     fn <a href='#tymethod.check_resolution' class='fnname'>check_resolution</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R&gt;;
@@ -111,7 +111,9 @@ allocations during a speed-critical search.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
+    <li><code>impl State&lt;<a class='enum' href='../zero_sum/impls/tak/enum.Ply.html' title='zero_sum::impls::tak::Ply'>Ply</a>,&nbsp;<a class='enum' href='../zero_sum/impls/tak/enum.Resolution.html' title='zero_sum::impls::tak::Resolution'>Resolution</a>&gt; for <a class='struct' href='../zero_sum/impls/tak/struct.State.html' title='zero_sum::impls::tak::State'>State</a></code></li>
+<li><code>impl State&lt;<a class='struct' href='../zero_sum/impls/tic_tac_toe/struct.Ply.html' title='zero_sum::impls::tic_tac_toe::Ply'>Ply</a>,&nbsp;<a class='enum' href='../zero_sum/impls/tic_tac_toe/enum.Resolution.html' title='zero_sum::impls::tic_tac_toe::Resolution'>Resolution</a>&gt; for <a class='struct' href='../zero_sum/impls/tic_tac_toe/struct.Board.html' title='zero_sum::impls::tic_tac_toe::Board'>Board</a></code></li>
+</ul><script type="text/javascript" async
                          src="../implementors/zero_sum/trait.State.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

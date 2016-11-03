@@ -143,6 +143,23 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
 </pre><pre class='rust '>
 <span class='comment'>//</span>
 <span class='comment'>// This file is part of zero_sum.</span>
@@ -165,18 +182,10 @@
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Mutex</span>;
-
-<span class='kw'>use</span> <span class='ident'>rand</span>::{<span class='ident'>Rng</span>, <span class='ident'>SeedableRng</span>, <span class='ident'>StdRng</span>};
-<span class='kw'>use</span> <span class='ident'>time</span>;
 
 <span class='kw'>use</span> <span class='ident'>analysis</span>::<span class='ident'>Extrapolatable</span>;
 <span class='kw'>use</span> <span class='ident'>ply</span>::<span class='ident'>Ply</span>;
 <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>history</span>::<span class='ident'>History</span>;
-
-<span class='macro'>lazy_static</span><span class='macro'>!</span> {
-    <span class='kw'>pub</span> <span class='kw'>static</span> <span class='kw-2'>ref</span> <span class='ident'>RNG</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='ident'>StdRng</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='ident'>StdRng</span>::<span class='ident'>from_seed</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>time</span>::<span class='ident'>precise_time_ns</span>() <span class='kw'>as</span> <span class='ident'>usize</span>]));
-}
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PlyGenerator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>X</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='kw'>where</span>
     <span class='ident'>X</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Extrapolatable</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
@@ -221,7 +230,6 @@
                 <span class='self'>self</span>.<span class='ident'>operation</span> <span class='op'>+=</span> <span class='number'>1</span>;
 
                 <span class='self'>self</span>.<span class='ident'>plies</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>extrapolate</span>();
-                <span class='ident'>RNG</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>().<span class='ident'>shuffle</span>(<span class='self'>self</span>.<span class='ident'>plies</span>.<span class='ident'>as_mut_slice</span>());
 
                 {
                     <span class='kw'>let</span> <span class='ident'>history</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>history</span>.<span class='ident'>borrow</span>();
@@ -243,6 +251,32 @@
                 }
             }
         }
+    }
+}
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>test</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with_tak&quot;</span>))]</span>
+<span class='kw'>mod</span> <span class='ident'>test_tak</span> {
+    <span class='kw'>use</span> <span class='ident'>test</span>::<span class='ident'>Bencher</span>;
+
+    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='op'>*</span>;
+    <span class='kw'>use</span> <span class='ident'>analysis</span>::<span class='ident'>search</span>::{<span class='ident'>Search</span>, <span class='ident'>PvSearch</span>};
+    <span class='kw'>use</span> <span class='ident'>impls</span>::<span class='ident'>tak</span>::<span class='op'>*</span>;
+
+    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
+    <span class='attribute'>#[<span class='ident'>ignore</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>bench_ply_generator_drain</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>search</span> <span class='op'>=</span> <span class='ident'>PvSearch</span>::<span class='op'>&lt;</span><span class='ident'>Evaluation</span>, <span class='ident'>State</span>, <span class='ident'>Ply</span>, <span class='ident'>Resolution</span><span class='op'>&gt;</span>::<span class='ident'>with_depth</span>(<span class='number'>5</span>);
+        <span class='kw'>let</span> <span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>State</span>::<span class='ident'>new</span>(<span class='number'>5</span>);
+        <span class='ident'>search</span>.<span class='ident'>search</span>(<span class='kw-2'>&amp;</span><span class='ident'>state</span>, <span class='prelude-val'>None</span>);
+
+        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>Ply</span>::<span class='ident'>Place</span> { <span class='ident'>x</span>: <span class='number'>0</span>, <span class='ident'>y</span>: <span class='number'>0</span>, <span class='ident'>piece</span>: <span class='ident'>Piece</span>::<span class='ident'>Flatstone</span>(<span class='ident'>Color</span>::<span class='ident'>White</span>) };
+            <span class='kw'>let</span> <span class='ident'>ply_generator</span> <span class='op'>=</span> <span class='ident'>PlyGenerator</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>state</span>, <span class='prelude-val'>None</span>, <span class='ident'>search</span>.<span class='ident'>history</span>.<span class='ident'>clone</span>());
+            <span class='kw'>for</span> <span class='ident'>ply</span> <span class='kw'>in</span> <span class='ident'>ply_generator</span> {
+                <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>ply</span>;
+            }
+            <span class='ident'>r</span>
+        });
     }
 }
 </pre>

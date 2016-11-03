@@ -47,8 +47,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-545' class='srclink' href='../src/zero_sum/src/ply.rs.html#45' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1970' class='srclink' href='../src/zero_sum/src/ply.rs.html#47' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Ply: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> { }</pre><div class='docblock'><p>This trait marks a ply.</p>
+
+<p>Implementors should implement Hash manually, writing only a single u64 to the hasher.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <p>For tic-tac-toe, we might have:</p>
@@ -65,7 +67,9 @@
 </div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
+    <li><code>impl Ply for <a class='enum' href='../zero_sum/impls/tak/enum.Ply.html' title='zero_sum::impls::tak::Ply'>Ply</a></code></li>
+<li><code>impl Ply for <a class='struct' href='../zero_sum/impls/tic_tac_toe/struct.Ply.html' title='zero_sum::impls::tic_tac_toe::Ply'>Ply</a></code></li>
+</ul><script type="text/javascript" async
                          src="../implementors/zero_sum/trait.Ply.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
