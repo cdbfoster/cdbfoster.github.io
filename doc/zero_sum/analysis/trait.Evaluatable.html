@@ -9,6 +9,7 @@
 
     <title>zero_sum::analysis::Evaluatable - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -47,11 +48,11 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-516' class='srclink' href='../../src/zero_sum/src/analysis/evaluation.rs.html#86-105' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/zero_sum/analysis/evaluation.rs.html#86-105' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Evaluatable&lt;E&gt; <span class='where'>where E: <a class='trait' href='../../zero_sum/analysis/trait.Evaluation.html' title='zero_sum::analysis::Evaluation'>Evaluation</a></span> {
     fn <a href='#tymethod.evaluate' class='fnname'>evaluate</a>(&amp;self) -&gt; E;
 
-    fn <a href='#method.evaluate_plies' class='fnname'>evaluate_plies</a>&lt;P,&nbsp;R&gt;(&amp;self, plies: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; E <span class='where'>where P: <a class='trait' href='../../zero_sum/trait.Ply.html' title='zero_sum::Ply'>Ply</a>, R: <a class='trait' href='../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a>, Self: <a class='trait' href='../../zero_sum/trait.State.html' title='zero_sum::State'>State</a>&lt;P,&nbsp;R&gt;</span> { ... }
+    fn <a href='#method.evaluate_plies' class='fnname'>evaluate_plies</a>&lt;P, R&gt;(&amp;self, plies: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; E <span class='where'>where P: <a class='trait' href='../../zero_sum/trait.Ply.html' title='zero_sum::Ply'>Ply</a>, R: <a class='trait' href='../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a>, Self: <a class='trait' href='../../zero_sum/trait.State.html' title='zero_sum::State'>State</a>&lt;P, R&gt;</span> { ... }
 }</pre><div class='docblock'><p>Provides evaluation capabilities.</p>
 
 <p>This is usually implemented on a <code>State</code>.</p>
@@ -62,7 +63,7 @@
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.evaluate_plies' class='method stab '><span id='evaluate_plies.v' class='invisible'><code>fn <a href='#method.evaluate_plies' class='fnname'>evaluate_plies</a>&lt;P,&nbsp;R&gt;(&amp;self, plies: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; E <span class='where'>where P: <a class='trait' href='../../zero_sum/trait.Ply.html' title='zero_sum::Ply'>Ply</a>, R: <a class='trait' href='../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a>, Self: <a class='trait' href='../../zero_sum/trait.State.html' title='zero_sum::State'>State</a>&lt;P,&nbsp;R&gt;</span></code></span></h3><div class='docblock'><p>Returns the evaluation of the state after executing <code>plies</code>.</p>
+        <h3 id='method.evaluate_plies' class='method stab '><span id='evaluate_plies.v' class='invisible'><code>fn <a href='#method.evaluate_plies' class='fnname'>evaluate_plies</a>&lt;P, R&gt;(&amp;self, plies: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; E <span class='where'>where P: <a class='trait' href='../../zero_sum/trait.Ply.html' title='zero_sum::Ply'>Ply</a>, R: <a class='trait' href='../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a>, Self: <a class='trait' href='../../zero_sum/trait.State.html' title='zero_sum::State'>State</a>&lt;P, R&gt;</span></code></span></h3><div class='docblock'><p>Returns the evaluation of the state after executing <code>plies</code>.</p>
 
 <h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>Will panic if the execution of any ply in <code>plies</code> causes an error.</p>
@@ -129,11 +130,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "zero_sum";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

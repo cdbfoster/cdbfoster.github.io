@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/chris/projects/takkerus2/src/zero_sum/src/ply.rs`.">
+    <meta name="description" content="Source to the Rust file `src/ply.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ply.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -87,6 +88,8 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
 </pre><pre class='rust '>
 <span class='comment'>//</span>
 <span class='comment'>// This file is part of zero_sum.</span>
@@ -111,6 +114,8 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::<span class='ident'>Hash</span>;
 
 <span class='doccomment'>/// This trait marks a ply.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Implementors should implement Hash manually, writing only a single u64 to the hasher.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// # Example</span>
 <span class='doccomment'>///</span>
@@ -190,11 +195,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "zero_sum";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
 
     <title>zero_sum::impls::tak::Resolution - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -47,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-809' class='srclink' href='../../../src/zero_sum/src/impls/tak/resolution.rs.html#24-33' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#24-33' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Resolution {
     Road(<a class='enum' href='../../../zero_sum/impls/tak/enum.Color.html' title='zero_sum::impls::tak::Color'>Color</a>),
     Flat(<a class='enum' href='../../../zero_sum/impls/tak/enum.Color.html' title='zero_sum::impls::tak::Color'>Color</a>),
@@ -59,7 +60,7 @@
 and one player has more flatstones.</p>
 </div><span id='variant.Draw' class='variant'><span id='Draw.v' class='invisible'><code>Draw</code></span></span><div class='docblock'><p>A player has run out of stones or the board is completely full,
 and neither player has more flatstones.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a> for <a class='enum' href='../../../zero_sum/impls/tak/enum.Resolution.html' title='zero_sum::impls::tak::Resolution'>Resolution</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-815' class='srclink' href='../../../src/zero_sum/src/impls/tak/resolution.rs.html#35-52' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a> for <a class='enum' href='../../../zero_sum/impls/tak/enum.Resolution.html' title='zero_sum::impls::tak::Resolution'>Resolution</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#35-52' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.is_win' class='method'><span id='is_win.v' class='invisible'><code>fn <a href='../../../zero_sum/trait.Resolution.html#tymethod.is_win' class='fnname'>is_win</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the value is either a <code>Road</code> or a <code>Flat</code>; false otherwise.</p>
 </div><h4 id='method.is_draw' class='method'><span id='is_draw.v' class='invisible'><code>fn <a href='../../../zero_sum/trait.Resolution.html#tymethod.is_draw' class='fnname'>is_draw</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
@@ -120,11 +121,9 @@ and neither player has more flatstones.</p>
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "zero_sum";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

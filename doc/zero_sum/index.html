@@ -9,6 +9,7 @@
 
     <title>zero_sum - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -47,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/zero_sum/src/lib.rs.html#20-97' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/zero_sum/lib.rs.html#20-97' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>An analysis engine for zero-sum games.</p>
 
 <p>This crate provides a number of traits that can be used to facilitate the
@@ -61,7 +62,7 @@ for tic-tac-toe and the game of <a href="http://cheapass.com/tak/">tak</a>.</p>
 used by adding <code>zero_sum</code> to the dependencies in your project&#39;s <code>Cargo.toml</code>.</p>
 
 <pre><code class="language-toml">[dependencies]
-zero_sum = &quot;1.0&quot;
+zero_sum = &quot;1.1&quot;
 </code></pre>
 
 <p>and add this to your crate root:</p>
@@ -98,14 +99,14 @@ be found in <a href="https://github.com/cdbfoster/zero_sum/blob/master/examples/
                        <tr class=' module-item'>
                            <td><a class='mod' href='analysis/index.html'
                                   title='zero_sum::analysis'>analysis</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Contains the traits and tools to provide analysis of zero-sum games.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='mod' href='impls/index.html'
                                   title='zero_sum::impls'>impls</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Contains implementations of the library for a few zero-sum games.</p>
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
@@ -113,7 +114,7 @@ be found in <a href="https://github.com/cdbfoster/zero_sum/blob/master/examples/
                        <tr class=' module-item'>
                            <td><a class='macro' href='macro.prepare_evaluation_tuple.html'
                                   title='zero_sum::prepare_evaluation_tuple'>prepare_evaluation_tuple</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Implement arithmetic operators (<code>Add</code>, <code>Sub</code>, <code>Mul</code>, <code>Neg</code>, <code>Div</code>) and <code>Display</code> for a tuple
 struct in terms of the enclosed type.</p>
                            </td>
@@ -122,21 +123,21 @@ struct in terms of the enclosed type.</p>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.Ply.html'
                                   title='zero_sum::Ply'>Ply</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>This trait marks a ply.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.Resolution.html'
                                   title='zero_sum::Resolution'>Resolution</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>A game&#39;s resolution.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.State.html'
                                   title='zero_sum::State'>State</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>The state of the game.</p>
                            </td>
                        </tr></table></section>
@@ -195,11 +196,9 @@ struct in terms of the enclosed type.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "zero_sum";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>
