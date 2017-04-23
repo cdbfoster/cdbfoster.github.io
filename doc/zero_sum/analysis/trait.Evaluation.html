@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>zero_sum</a>::<wbr><a href='index.html'>analysis</a></p><script>window.sidebarCurrent = {name: 'Evaluation', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Evaluation</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>zero_sum</a>::<wbr><a href='index.html'>analysis</a></p><script>window.sidebarCurrent = {name: 'Evaluation', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,18 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>zero_sum</a>::<wbr><a href='index.html'>analysis</a>::<wbr><a class='trait' href=''>Evaluation</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>zero_sum</a>::<wbr><a href='index.html'>analysis</a>::<wbr><a class="trait" href=''>Evaluation</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/zero_sum/analysis/evaluation.rs.html#57-81' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Evaluation: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='core::ops::Sub'>Sub</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Neg.html' title='core::ops::Neg'>Neg</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Div.html' title='core::ops::Div'>Div</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> {
+               </span><a class='srclink' href='../../src/zero_sum/analysis/evaluator.rs.html#55-88' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Evaluation: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Add.html" title="trait core::ops::Add">Add</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html" title="trait core::ops::Sub">Sub</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Neg.html" title="trait core::ops::Neg">Neg</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Div.html" title="trait core::ops::Div">Div</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html" title="trait core::cmp::PartialOrd">PartialOrd</a> {
     fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self;
-    fn <a href='#tymethod.epsilon' class='fnname'>epsilon</a>() -&gt; Self;
+    fn <a href='#tymethod.shift' class='fnname'>shift</a>(self, steps: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; Self;
     fn <a href='#tymethod.win' class='fnname'>win</a>() -&gt; Self;
     fn <a href='#tymethod.max' class='fnname'>max</a>() -&gt; Self;
-    fn <a href='#tymethod.is_win' class='fnname'>is_win</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_win' class='fnname'>is_win</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+
+    fn <a href='#method.lose' class='fnname'>lose</a>() -&gt; Self { ... }
+    fn <a href='#method.min' class='fnname'>min</a>() -&gt; Self { ... }
+    fn <a href='#method.is_lose' class='fnname'>is_lose</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> { ... }
+    fn <a href='#method.is_end' class='fnname'>is_end</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> { ... }
 }</pre><div class='docblock'><p>An evaluation type.</p>
 
 <p>This is usually a tuple around a signed numeric type.</p>
@@ -62,40 +67,46 @@
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <p>There is a <a href="../macro.prepare_evaluation_tuple.html">helper macro</a> to facilitate the implementation of tuple structs:</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>zero_sum</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>i32</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Div</span>, <span class='ident'>Mul</span>, <span class='ident'>Neg</span>, <span class='ident'>Sub</span>};
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">zero_sum</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">i32</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Neg</span>, <span class="ident">Sub</span>};
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>)]</span>
-<span class='kw'>struct</span> <span class='ident'>Eval</span>(<span class='ident'>i32</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Eval</span>(<span class="ident">i32</span>);
 
-<span class='macro'>prepare_evaluation_tuple</span><span class='macro'>!</span>(<span class='ident'>Eval</span>); <span class='comment'>// impl Add, Div, Mul, Neg, Sub, and Display</span>
+<span class="macro">prepare_evaluation_tuple</span><span class="macro">!</span>(<span class="ident">Eval</span>); <span class="comment">// impl Add, Div, Mul, Neg, Sub, and Display</span>
 
-<span class='kw'>impl</span> <span class='ident'>Evaluation</span> <span class='kw'>for</span> <span class='ident'>Eval</span> {
-    <span class='kw'>fn</span> <span class='ident'>null</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='number'>0</span>) }
-    <span class='kw'>fn</span> <span class='ident'>epsilon</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='number'>1</span>) }
-    <span class='kw'>fn</span> <span class='ident'>win</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='number'>100000</span>) }
-    <span class='kw'>fn</span> <span class='ident'>max</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='ident'>i32</span>::<span class='ident'>MAX</span>) }
-    <span class='kw'>fn</span> <span class='ident'>is_win</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>abs</span>() <span class='op'>&gt;</span> <span class='number'>99000</span> }
+<span class="kw">impl</span> <span class="ident">Evaluation</span> <span class="kw">for</span> <span class="ident">Eval</span> {
+    <span class="kw">fn</span> <span class="ident">null</span>() <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="number">0</span>) }
+    <span class="kw">fn</span> <span class="ident">shift</span>(<span class="self">self</span>, <span class="ident">steps</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">+</span> <span class="ident">steps</span>) }
+    <span class="kw">fn</span> <span class="ident">win</span>() <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="number">100000</span>) }
+    <span class="kw">fn</span> <span class="ident">max</span>() <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="ident">i32</span>::<span class="ident">MAX</span>) }
+    <span class="kw">fn</span> <span class="ident">is_win</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&gt;</span> <span class="number">99000</span> }
 }</pre>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.null' class='method stab '><span id='null.v' class='invisible'><code>fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self</code></span></h3><div class='docblock'><p>An empty, or zero evaluation.</p>
-</div><h3 id='tymethod.epsilon' class='method stab '><span id='epsilon.v' class='invisible'><code>fn <a href='#tymethod.epsilon' class='fnname'>epsilon</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The smallest step to consider.</p>
-</div><h3 id='tymethod.win' class='method stab '><span id='win.v' class='invisible'><code>fn <a href='#tymethod.win' class='fnname'>win</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The base value of a win.  The evaluation system may add or subtract to it in
+        <h3 id='tymethod.null' class='method'><span id='null.v' class='invisible'><code>fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self</code></span></h3><div class='docblock'><p>An empty, or zero evaluation.</p>
+</div><h3 id='tymethod.shift' class='method'><span id='shift.v' class='invisible'><code>fn <a href='#tymethod.shift' class='fnname'>shift</a>(self, steps: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Shift the evaluation by the smallest representable amount <code>steps</code> times in the positive or negative direction.</p>
+</div><h3 id='tymethod.win' class='method'><span id='win.v' class='invisible'><code>fn <a href='#tymethod.win' class='fnname'>win</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The base value of a win.  The evaluator may add or subtract to it in
 in order to promote it or discourage it in favor of others in the search.</p>
-</div><h3 id='tymethod.max' class='method stab '><span id='max.v' class='invisible'><code>fn <a href='#tymethod.max' class='fnname'>max</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The maximum value representable.  This must be safely negatable.</p>
-</div><h3 id='tymethod.is_win' class='method stab '><span id='is_win.v' class='invisible'><code>fn <a href='#tymethod.is_win' class='fnname'>is_win</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Returns <code>true</code> if this evaluation contains a win.  This is usually a check to
-see if the absolute value is above a certain threshold.</p>
+</div><h3 id='tymethod.max' class='method'><span id='max.v' class='invisible'><code>fn <a href='#tymethod.max' class='fnname'>max</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The maximum value representable.  This must be safely negatable.</p>
+</div><h3 id='tymethod.is_win' class='method'><span id='is_win.v' class='invisible'><code>fn <a href='#tymethod.is_win' class='fnname'>is_win</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Returns <code>true</code> if this evaluation contains a win.  This is usually a check to
+see if the value is above a certain threshold.</p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.lose' class='method'><span id='lose.v' class='invisible'><code>fn <a href='#method.lose' class='fnname'>lose</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The base value of a loss.  The evaluator may add or subtract to it in
+in order to promote it or discourage it in favor of others in the search.</p>
+</div><h3 id='method.min' class='method'><span id='min.v' class='invisible'><code>fn <a href='#method.min' class='fnname'>min</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The minimum value representable.</p>
+</div><h3 id='method.is_lose' class='method'><span id='is_lose.v' class='invisible'><code>fn <a href='#method.is_lose' class='fnname'>is_lose</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Returns <code>true</code> if this evaluation contains a loss.</p>
+</div><h3 id='method.is_end' class='method'><span id='is_end.v' class='invisible'><code>fn <a href='#method.is_end' class='fnname'>is_end</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Returns <code>true</code> if this evaluation is either a win or a loss.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl Evaluation for <a class='struct' href='../../zero_sum/impls/tak/struct.Evaluation.html' title='zero_sum::impls::tak::Evaluation'>Evaluation</a></code></li>
-<li><code>impl Evaluation for <a class='struct' href='../../zero_sum/impls/tic_tac_toe/struct.Evaluation.html' title='zero_sum::impls::tic_tac_toe::Evaluation'>Evaluation</a></code></li>
-</ul><script type="text/javascript" async
+    </ul><script type="text/javascript" async
                          src="../../implementors/zero_sum/analysis/trait.Evaluation.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

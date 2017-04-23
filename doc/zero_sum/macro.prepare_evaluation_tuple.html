@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc macro">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,37 +43,37 @@
         </form>
     </nav>
 
-    <section id='main' class="content macro">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>zero_sum</a>::<wbr><a class='macro' href=''>prepare_evaluation_tuple</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>zero_sum</a>::<wbr><a class="macro" href=''>prepare_evaluation_tuple</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/zero_sum/analysis/evaluation.rs.html#135-184' title='goto source code'>[src]</a></span></h1>
-<pre class='rust macro'>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>prepare_evaluation_tuple</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>type_</span>: <span class='ident'>ident</span>) <span class='op'>=&gt;</span> { ... };
+               </span><a class='srclink' href='../src/zero_sum/analysis/evaluator.rs.html#143-192' title='goto source code'>[src]</a></span></h1>
+<pre class="rust macro">
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">prepare_evaluation_tuple</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_</span>: <span class="ident">ident</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>Implement arithmetic operators (<code>Add</code>, <code>Sub</code>, <code>Mul</code>, <code>Neg</code>, <code>Div</code>) and <code>Display</code> for a tuple
 struct in terms of the enclosed type.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>zero_sum</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>i32</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Div</span>, <span class='ident'>Mul</span>, <span class='ident'>Neg</span>, <span class='ident'>Sub</span>};
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">zero_sum</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">i32</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Neg</span>, <span class="ident">Sub</span>};
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>)]</span>
-<span class='kw'>struct</span> <span class='ident'>Eval</span>(<span class='ident'>i32</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Eval</span>(<span class="ident">i32</span>);
 
-<span class='macro'>prepare_evaluation_tuple</span><span class='macro'>!</span>(<span class='ident'>Eval</span>); <span class='comment'>// impl Add, Div, Mul, Neg, Sub, and Display</span>
+<span class="macro">prepare_evaluation_tuple</span><span class="macro">!</span>(<span class="ident">Eval</span>); <span class="comment">// impl Add, Div, Mul, Neg, Sub, and Display</span>
 
-<span class='kw'>impl</span> <span class='ident'>Evaluation</span> <span class='kw'>for</span> <span class='ident'>Eval</span> {
-    <span class='kw'>fn</span> <span class='ident'>null</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='number'>0</span>) }
-    <span class='kw'>fn</span> <span class='ident'>epsilon</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='number'>1</span>) }
-    <span class='kw'>fn</span> <span class='ident'>win</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='number'>100000</span>) }
-    <span class='kw'>fn</span> <span class='ident'>max</span>() <span class='op'>-&gt;</span> <span class='ident'>Eval</span> { <span class='ident'>Eval</span>(<span class='ident'>i32</span>::<span class='ident'>MAX</span>) }
-    <span class='kw'>fn</span> <span class='ident'>is_win</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>abs</span>() <span class='op'>&gt;</span> <span class='number'>99000</span> }
+<span class="kw">impl</span> <span class="ident">Evaluation</span> <span class="kw">for</span> <span class="ident">Eval</span> {
+    <span class="kw">fn</span> <span class="ident">null</span>() <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="number">0</span>) }
+    <span class="kw">fn</span> <span class="ident">shift</span>(<span class="self">self</span>, <span class="ident">steps</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">+</span> <span class="ident">steps</span>) }
+    <span class="kw">fn</span> <span class="ident">win</span>() <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="number">100000</span>) }
+    <span class="kw">fn</span> <span class="ident">max</span>() <span class="op">-&gt;</span> <span class="ident">Eval</span> { <span class="ident">Eval</span>(<span class="ident">i32</span>::<span class="ident">MAX</span>) }
+    <span class="kw">fn</span> <span class="ident">is_win</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span>.<span class="ident">abs</span>() <span class="op">&gt;</span> <span class="number">99000</span> }
 }</pre>
 </div></section>
     <section id='search' class="content hidden"></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -224,186 +224,222 @@
 <span id="179">179</span>
 <span id="180">180</span>
 <span id="181">181</span>
-</pre><pre class='rust '>
-<span class='comment'>//</span>
-<span class='comment'>// This file is part of zero_sum.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright 2016-2017 Chris Foster</span>
-<span class='comment'>//</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+</pre><pre class="rust ">
+<span class="comment">//</span>
+<span class="comment">// This file is part of zero_sum.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright 2016-2017 Chris Foster</span>
+<span class="comment">//</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Statistics</span> {
-    <span class='kw'>pub</span> <span class='ident'>visited</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>evaluated</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>tt_saves</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>tt_hits</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>tt_stores</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>time</span>: <span class='ident'>f32</span>,
+<span class="doccomment">/// Represents statistics for the search at a single depth.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StatisticsLevel</span> {
+    <span class="doccomment">/// The number of nodes visited on this level.</span>
+    <span class="kw">pub</span> <span class="ident">visited</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The number of nodes evaluated on this level.</span>
+    <span class="kw">pub</span> <span class="ident">evaluated</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The number of usable transposition table hits.</span>
+    <span class="kw">pub</span> <span class="ident">tt_saves</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The number of states we visited that were already in the transposition table.</span>
+    <span class="kw">pub</span> <span class="ident">tt_hits</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The number of states we put into the transposition table.</span>
+    <span class="kw">pub</span> <span class="ident">tt_stores</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The amount of time we spent searching this depth.</span>
+    <span class="kw">pub</span> <span class="ident">time</span>: <span class="ident">f32</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Statistics</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>Statistics</span> {
-        <span class='ident'>Statistics</span> {
-            <span class='ident'>visited</span>: <span class='number'>0</span>,
-            <span class='ident'>evaluated</span>: <span class='number'>0</span>,
-            <span class='ident'>tt_saves</span>: <span class='number'>0</span>,
-            <span class='ident'>tt_hits</span>: <span class='number'>0</span>,
-            <span class='ident'>tt_stores</span>: <span class='number'>0</span>,
-            <span class='ident'>time</span>: <span class='number'>0.0</span>,
+<span class="kw">impl</span> <span class="ident">StatisticsLevel</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">StatisticsLevel</span> {
+        <span class="ident">StatisticsLevel</span> {
+            <span class="ident">visited</span>: <span class="number">0</span>,
+            <span class="ident">evaluated</span>: <span class="number">0</span>,
+            <span class="ident">tt_saves</span>: <span class="number">0</span>,
+            <span class="ident">tt_hits</span>: <span class="number">0</span>,
+            <span class="ident">tt_stores</span>: <span class="number">0</span>,
+            <span class="ident">time</span>: <span class="number">0.0</span>,
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>StatisticPrinter</span>(<span class='kw'>pub</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Statistics</span><span class='op'>&gt;&gt;</span>);
+<span class="doccomment">/// Full statistics for this search.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Statistics</span> {
+    <span class="doccomment">/// Statistics for each depth of the search.</span>
+    <span class="kw">pub</span> <span class="ident">depth</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">StatisticsLevel</span><span class="op">&gt;&gt;</span>,
+}
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>StatisticPrinter</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>let</span> <span class='ident'>titles</span> <span class='op'>=</span> [
-            <span class='string'>&quot;Visited:&quot;</span>,
-            <span class='string'>&quot;Evaluated:&quot;</span>,
-            <span class='string'>&quot;TT Saves:&quot;</span>,
-            <span class='string'>&quot;TT Hits:&quot;</span>,
-            <span class='string'>&quot;TT Stores:&quot;</span>,
-            <span class='string'>&quot;Time:&quot;</span>,
+<span class="kw">impl</span> <span class="ident">Statistics</span> {
+    <span class="doccomment">/// Calculate the totals for each iteration of the search&#39;s iterative deepening.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">calculate_depth_totals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">StatisticsLevel</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">totals</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">StatisticsLevel</span>::<span class="ident">new</span>(); <span class="self">self</span>.<span class="ident">depth</span>.<span class="ident">len</span>()];
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">max_depth</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">depth</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="kw">for</span> <span class="ident">depth</span> <span class="kw">in</span> <span class="ident">max_depth</span> {
+                <span class="ident">totals</span>[<span class="ident">i</span>].<span class="ident">visited</span> <span class="op">+=</span> <span class="ident">depth</span>.<span class="ident">visited</span>;
+                <span class="ident">totals</span>[<span class="ident">i</span>].<span class="ident">evaluated</span> <span class="op">+=</span> <span class="ident">depth</span>.<span class="ident">evaluated</span>;
+                <span class="ident">totals</span>[<span class="ident">i</span>].<span class="ident">tt_saves</span> <span class="op">+=</span> <span class="ident">depth</span>.<span class="ident">tt_saves</span>;
+                <span class="ident">totals</span>[<span class="ident">i</span>].<span class="ident">tt_hits</span> <span class="op">+=</span> <span class="ident">depth</span>.<span class="ident">tt_hits</span>;
+                <span class="ident">totals</span>[<span class="ident">i</span>].<span class="ident">tt_stores</span> <span class="op">+=</span> <span class="ident">depth</span>.<span class="ident">tt_stores</span>;
+                <span class="ident">totals</span>[<span class="ident">i</span>].<span class="ident">time</span> <span class="op">+=</span> <span class="ident">depth</span>.<span class="ident">time</span>;
+            }
+        }
+        <span class="ident">totals</span>
+    }
+
+    <span class="doccomment">/// Calculate the totals for all search iterations.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">calculate_totals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StatisticsLevel</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">final_totals</span> <span class="op">=</span> <span class="ident">StatisticsLevel</span>::<span class="ident">new</span>();
+        <span class="kw">for</span> <span class="ident">total</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">calculate_depth_totals</span>() {
+            <span class="ident">final_totals</span>.<span class="ident">visited</span> <span class="op">+=</span> <span class="ident">total</span>.<span class="ident">visited</span>;
+            <span class="ident">final_totals</span>.<span class="ident">evaluated</span> <span class="op">+=</span> <span class="ident">total</span>.<span class="ident">evaluated</span>;
+            <span class="ident">final_totals</span>.<span class="ident">tt_saves</span> <span class="op">+=</span> <span class="ident">total</span>.<span class="ident">tt_saves</span>;
+            <span class="ident">final_totals</span>.<span class="ident">tt_hits</span> <span class="op">+=</span> <span class="ident">total</span>.<span class="ident">tt_hits</span>;
+            <span class="ident">final_totals</span>.<span class="ident">tt_stores</span> <span class="op">+=</span> <span class="ident">total</span>.<span class="ident">tt_stores</span>;
+            <span class="ident">final_totals</span>.<span class="ident">time</span> <span class="op">+=</span> <span class="ident">total</span>.<span class="ident">time</span>;
+        }
+        <span class="ident">final_totals</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Statistics</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">let</span> <span class="ident">titles</span> <span class="op">=</span> [
+            <span class="string">&quot;Visited:&quot;</span>,
+            <span class="string">&quot;Evaluated:&quot;</span>,
+            <span class="string">&quot;TT Saves:&quot;</span>,
+            <span class="string">&quot;TT Hits:&quot;</span>,
+            <span class="string">&quot;TT Stores:&quot;</span>,
+            <span class="string">&quot;Time:&quot;</span>,
         ];
 
-        <span class='kw'>let</span> <span class='ident'>title_width</span> <span class='op'>=</span> <span class='ident'>titles</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>title</span><span class='op'>|</span> <span class='ident'>title</span>.<span class='ident'>len</span>()).<span class='ident'>max</span>().<span class='ident'>unwrap</span>() <span class='op'>+</span> <span class='number'>1</span>;
+        <span class="kw">let</span> <span class="ident">title_width</span> <span class="op">=</span> <span class="ident">titles</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">title</span><span class="op">|</span> <span class="ident">title</span>.<span class="ident">len</span>()).<span class="ident">max</span>().<span class="ident">unwrap</span>() <span class="op">+</span> <span class="number">1</span>;
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='macro'>vec</span><span class='macro'>!</span>[<span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>String</span>::<span class='ident'>new</span>(); <span class='ident'>titles</span>.<span class='ident'>len</span>()]; <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>len</span>()]; <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>1</span>];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="macro">vec</span><span class="macro">!</span>[<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">String</span>::<span class="ident">new</span>(); <span class="ident">titles</span>.<span class="ident">len</span>()]; <span class="self">self</span>.<span class="ident">depth</span>.<span class="ident">len</span>()]; <span class="self">self</span>.<span class="ident">depth</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>];
 
-        <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>depth</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span> {
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>0</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>visited</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>1</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>evaluated</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>2</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>tt_saves</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>3</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>tt_hits</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>4</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>tt_stores</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>5</span>] <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>time</span> <span class='op'>!=</span> <span class='number'>0.0</span> {
-                    <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{:.2}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>].<span class='ident'>time</span>)
-                } <span class='kw'>else</span> {
-                    <span class='ident'>String</span>::<span class='ident'>new</span>()
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">depth</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">depth</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span> {
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">0</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">visited</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">1</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">evaluated</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">2</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">tt_saves</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">3</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">tt_hits</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">4</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">tt_stores</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">5</span>] <span class="op">=</span> <span class="kw">if</span> <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">time</span> <span class="op">!=</span> <span class="number">0.0</span> {
+                    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:.2}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>].<span class="ident">time</span>)
+                } <span class="kw">else</span> {
+                    <span class="ident">String</span>::<span class="ident">new</span>()
                 };
             }
         }
 
-        <span class='kw'>let</span> <span class='ident'>totals</span> <span class='op'>=</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>totals</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>Statistics</span>::<span class='ident'>new</span>(); <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>len</span>()];
-
-            <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>max_depth</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-                <span class='kw'>for</span> <span class='ident'>depth</span> <span class='kw'>in</span> <span class='ident'>max_depth</span> {
-                    <span class='ident'>totals</span>[<span class='ident'>i</span>].<span class='ident'>visited</span> <span class='op'>+=</span> <span class='ident'>depth</span>.<span class='ident'>visited</span>;
-                    <span class='ident'>totals</span>[<span class='ident'>i</span>].<span class='ident'>evaluated</span> <span class='op'>+=</span> <span class='ident'>depth</span>.<span class='ident'>evaluated</span>;
-                    <span class='ident'>totals</span>[<span class='ident'>i</span>].<span class='ident'>tt_saves</span> <span class='op'>+=</span> <span class='ident'>depth</span>.<span class='ident'>tt_saves</span>;
-                    <span class='ident'>totals</span>[<span class='ident'>i</span>].<span class='ident'>tt_hits</span> <span class='op'>+=</span> <span class='ident'>depth</span>.<span class='ident'>tt_hits</span>;
-                    <span class='ident'>totals</span>[<span class='ident'>i</span>].<span class='ident'>tt_stores</span> <span class='op'>+=</span> <span class='ident'>depth</span>.<span class='ident'>tt_stores</span>;
-                    <span class='ident'>totals</span>[<span class='ident'>i</span>].<span class='ident'>time</span> <span class='op'>+=</span> <span class='ident'>depth</span>.<span class='ident'>time</span>;
-                }
-            }
-
-            <span class='ident'>totals</span>
-        };
+        <span class="kw">let</span> <span class="ident">totals</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">calculate_depth_totals</span>();
 
         {
-            <span class='kw'>let</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>;
-            <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>i</span> {
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>0</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>totals</span>[<span class='ident'>j</span>].<span class='ident'>visited</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>1</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>totals</span>[<span class='ident'>j</span>].<span class='ident'>evaluated</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>2</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>totals</span>[<span class='ident'>j</span>].<span class='ident'>tt_saves</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>3</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>totals</span>[<span class='ident'>j</span>].<span class='ident'>tt_hits</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>4</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>totals</span>[<span class='ident'>j</span>].<span class='ident'>tt_stores</span>);
-                <span class='ident'>data</span>[<span class='ident'>i</span>][<span class='ident'>j</span>][<span class='number'>5</span>] <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{:.2}&quot;</span>, <span class='ident'>totals</span>[<span class='ident'>j</span>].<span class='ident'>time</span>);
+            <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
+            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">i</span> {
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">0</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">totals</span>[<span class="ident">j</span>].<span class="ident">visited</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">1</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">totals</span>[<span class="ident">j</span>].<span class="ident">evaluated</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">2</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">totals</span>[<span class="ident">j</span>].<span class="ident">tt_saves</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">3</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">totals</span>[<span class="ident">j</span>].<span class="ident">tt_hits</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">4</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">totals</span>[<span class="ident">j</span>].<span class="ident">tt_stores</span>);
+                <span class="ident">data</span>[<span class="ident">i</span>][<span class="ident">j</span>][<span class="number">5</span>] <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:.2}&quot;</span>, <span class="ident">totals</span>[<span class="ident">j</span>].<span class="ident">time</span>);
             }
         }
 
-        <span class='kw'>let</span> <span class='ident'>column_widths</span> <span class='op'>=</span> {
-            <span class='kw'>let</span> <span class='ident'>widths</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>max_depth</span><span class='op'>|</span>
-                <span class='ident'>max_depth</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>depth</span><span class='op'>|</span>
-                    <span class='ident'>depth</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>stat</span><span class='op'>|</span> <span class='ident'>stat</span>.<span class='ident'>len</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
-                ).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
-            ).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>();
+        <span class="kw">let</span> <span class="ident">column_widths</span> <span class="op">=</span> {
+            <span class="kw">let</span> <span class="ident">widths</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">max_depth</span><span class="op">|</span>
+                <span class="ident">max_depth</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">depth</span><span class="op">|</span>
+                    <span class="ident">depth</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">stat</span><span class="op">|</span> <span class="ident">stat</span>.<span class="ident">len</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
+                ).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
+            ).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>();
 
-            (<span class='number'>0</span>..<span class='ident'>data</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>depth</span><span class='op'>|</span>
-                (<span class='number'>0</span>..(<span class='ident'>data</span>.<span class='ident'>len</span>() <span class='op'>*</span> <span class='ident'>titles</span>.<span class='ident'>len</span>())).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> {
-                    <span class='kw'>let</span> <span class='ident'>max_depth</span> <span class='op'>=</span> <span class='ident'>i</span> <span class='op'>/</span> <span class='ident'>titles</span>.<span class='ident'>len</span>();
-                    <span class='kw'>let</span> <span class='ident'>stat</span> <span class='op'>=</span> <span class='ident'>i</span> <span class='op'>%</span> <span class='ident'>titles</span>.<span class='ident'>len</span>();
-                    <span class='ident'>widths</span>[<span class='ident'>max_depth</span>][<span class='ident'>depth</span>][<span class='ident'>stat</span>]
-                }).<span class='ident'>max</span>().<span class='ident'>unwrap</span>()
-            ).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
+            (<span class="number">0</span>..<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">depth</span><span class="op">|</span>
+                (<span class="number">0</span>..(<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="ident">titles</span>.<span class="ident">len</span>())).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> {
+                    <span class="kw">let</span> <span class="ident">max_depth</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">/</span> <span class="ident">titles</span>.<span class="ident">len</span>();
+                    <span class="kw">let</span> <span class="ident">stat</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">%</span> <span class="ident">titles</span>.<span class="ident">len</span>();
+                    <span class="ident">widths</span>[<span class="ident">max_depth</span>][<span class="ident">depth</span>][<span class="ident">stat</span>]
+                }).<span class="ident">max</span>().<span class="ident">unwrap</span>()
+            ).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
         };
 
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;PVS Statistics:&quot;</span>));
-
-        <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>max_depth</span>) <span class='kw'>in</span> <span class='ident'>data</span>[..<span class='ident'>data</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>].<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n  {0:1$}&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Max Depth {}:&quot;</span>, <span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>), <span class='ident'>title_width</span> <span class='op'>+</span> <span class='number'>2</span>));
-            <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>max_depth</span>.<span class='ident'>len</span>() {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;  {0:&gt;1$}&quot;</span>, <span class='ident'>j</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>column_widths</span>[<span class='ident'>j</span>]));
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">max_depth</span>) <span class="kw">in</span> <span class="ident">data</span>[..<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\n  {0:1$}&quot;</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Max Depth {}:&quot;</span>, <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>), <span class="ident">title_width</span> <span class="op">+</span> <span class="number">2</span>));
+            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">max_depth</span>.<span class="ident">len</span>() {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;  {0:&gt;1$}&quot;</span>, <span class="ident">j</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">column_widths</span>[<span class="ident">j</span>]));
             }
-            <span class='kw'>for</span> (<span class='ident'>j</span>, <span class='ident'>title</span>) <span class='kw'>in</span> <span class='ident'>titles</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n    {0:1$}&quot;</span>, <span class='ident'>title</span>, <span class='ident'>title_width</span>));
-                <span class='kw'>for</span> (<span class='ident'>k</span>, <span class='ident'>depth</span>) <span class='kw'>in</span> <span class='ident'>max_depth</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;  {0:&gt;1$}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>], <span class='ident'>column_widths</span>[<span class='ident'>k</span>]));
+            <span class="kw">for</span> (<span class="ident">j</span>, <span class="ident">title</span>) <span class="kw">in</span> <span class="ident">titles</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\n    {0:1$}&quot;</span>, <span class="ident">title</span>, <span class="ident">title_width</span>));
+                <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">depth</span>) <span class="kw">in</span> <span class="ident">max_depth</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;  {0:&gt;1$}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>], <span class="ident">column_widths</span>[<span class="ident">k</span>]));
                 }
             }
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n&quot;</span>));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\n&quot;</span>));
         }
 
-        <span class='kw'>let</span> <span class='ident'>final_totals</span> <span class='op'>=</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>final_totals</span> <span class='op'>=</span> <span class='ident'>Statistics</span>::<span class='ident'>new</span>();
-            <span class='kw'>for</span> <span class='ident'>total</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>totals</span> {
-                <span class='ident'>final_totals</span>.<span class='ident'>visited</span> <span class='op'>+=</span> <span class='ident'>total</span>.<span class='ident'>visited</span>;
-                <span class='ident'>final_totals</span>.<span class='ident'>evaluated</span> <span class='op'>+=</span> <span class='ident'>total</span>.<span class='ident'>evaluated</span>;
-                <span class='ident'>final_totals</span>.<span class='ident'>tt_saves</span> <span class='op'>+=</span> <span class='ident'>total</span>.<span class='ident'>tt_saves</span>;
-                <span class='ident'>final_totals</span>.<span class='ident'>tt_hits</span> <span class='op'>+=</span> <span class='ident'>total</span>.<span class='ident'>tt_hits</span>;
-                <span class='ident'>final_totals</span>.<span class='ident'>tt_stores</span> <span class='op'>+=</span> <span class='ident'>total</span>.<span class='ident'>tt_stores</span>;
-                <span class='ident'>final_totals</span>.<span class='ident'>time</span> <span class='op'>+=</span> <span class='ident'>total</span>.<span class='ident'>time</span>;
-            }
+        <span class="kw">let</span> <span class="ident">final_totals</span> <span class="op">=</span> {
+            <span class="kw">let</span> <span class="ident">final_totals</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">calculate_totals</span>();
 
-            <span class='macro'>vec</span><span class='macro'>!</span>[
-                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>final_totals</span>.<span class='ident'>visited</span>),
-                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>final_totals</span>.<span class='ident'>evaluated</span>),
-                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>final_totals</span>.<span class='ident'>tt_saves</span>),
-                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>final_totals</span>.<span class='ident'>tt_hits</span>),
-                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>final_totals</span>.<span class='ident'>tt_stores</span>),
-                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{:.2}&quot;</span>, <span class='ident'>final_totals</span>.<span class='ident'>time</span>),
+            <span class="macro">vec</span><span class="macro">!</span>[
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">final_totals</span>.<span class="ident">visited</span>),
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">final_totals</span>.<span class="ident">evaluated</span>),
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">final_totals</span>.<span class="ident">tt_saves</span>),
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">final_totals</span>.<span class="ident">tt_hits</span>),
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">final_totals</span>.<span class="ident">tt_stores</span>),
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:.2}&quot;</span>, <span class="ident">final_totals</span>.<span class="ident">time</span>),
             ]
         };
 
-        <span class='kw'>let</span> <span class='ident'>final_totals_width</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>max</span>(
-            <span class='ident'>final_totals</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>total</span><span class='op'>|</span> <span class='ident'>total</span>.<span class='ident'>len</span>()).<span class='ident'>max</span>().<span class='ident'>unwrap</span>(),
-            <span class='string'>&quot;Total&quot;</span>.<span class='ident'>len</span>(),
+        <span class="kw">let</span> <span class="ident">final_totals_width</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">max</span>(
+            <span class="ident">final_totals</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">total</span><span class="op">|</span> <span class="ident">total</span>.<span class="ident">len</span>()).<span class="ident">max</span>().<span class="ident">unwrap</span>(),
+            <span class="string">&quot;Total&quot;</span>.<span class="ident">len</span>(),
         );
 
-        <span class='kw'>let</span> <span class='ident'>totals_strings</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>last</span>().<span class='ident'>unwrap</span>();
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n  {0:1$}&quot;</span>, <span class='string'>&quot;Totals:&quot;</span>, <span class='ident'>title_width</span> <span class='op'>+</span> <span class='number'>2</span>));
-        <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>totals_strings</span>.<span class='ident'>len</span>() {
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;  {0:&gt;1$}&quot;</span>, <span class='ident'>j</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>column_widths</span>[<span class='ident'>j</span>]));
+        <span class="kw">let</span> <span class="ident">totals_strings</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">last</span>().<span class="ident">unwrap</span>();
+        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\n  {0:1$}&quot;</span>, <span class="string">&quot;Totals:&quot;</span>, <span class="ident">title_width</span> <span class="op">+</span> <span class="number">2</span>));
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">totals_strings</span>.<span class="ident">len</span>() {
+            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;  {0:&gt;1$}&quot;</span>, <span class="ident">j</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">column_widths</span>[<span class="ident">j</span>]));
         }
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;  {0:&gt;1$}&quot;</span>, <span class='string'>&quot;Total&quot;</span>, <span class='ident'>final_totals_width</span>));
-        <span class='kw'>for</span> (<span class='ident'>j</span>, <span class='ident'>title</span>) <span class='kw'>in</span> <span class='ident'>titles</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\n    {0:1$}&quot;</span>, <span class='ident'>title</span>, <span class='ident'>title_width</span>));
-            <span class='kw'>for</span> (<span class='ident'>k</span>, <span class='ident'>depth</span>) <span class='kw'>in</span> <span class='ident'>totals_strings</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;  {0:&gt;1$}&quot;</span>, <span class='ident'>depth</span>[<span class='ident'>j</span>], <span class='ident'>column_widths</span>[<span class='ident'>k</span>]));
+        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;  {0:&gt;1$}&quot;</span>, <span class="string">&quot;Total&quot;</span>, <span class="ident">final_totals_width</span>));
+        <span class="kw">for</span> (<span class="ident">j</span>, <span class="ident">title</span>) <span class="kw">in</span> <span class="ident">titles</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\n    {0:1$}&quot;</span>, <span class="ident">title</span>, <span class="ident">title_width</span>));
+            <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">depth</span>) <span class="kw">in</span> <span class="ident">totals_strings</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;  {0:&gt;1$}&quot;</span>, <span class="ident">depth</span>[<span class="ident">j</span>], <span class="ident">column_widths</span>[<span class="ident">k</span>]));
             }
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;  {0:&gt;1$}&quot;</span>, <span class='ident'>final_totals</span>[<span class='ident'>j</span>], <span class='ident'>final_totals_width</span>));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;  {0:&gt;1$}&quot;</span>, <span class="ident">final_totals</span>[<span class="ident">j</span>], <span class="ident">final_totals_width</span>));
         }
 
-        <span class='prelude-val'>Ok</span>(())
+        <span class="prelude-val">Ok</span>(())
     }
 }
 </pre>

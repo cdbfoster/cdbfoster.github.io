@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -72,36 +72,36 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
-</pre><pre class='rust '>
-<span class='comment'>//</span>
-<span class='comment'>// This file is part of zero_sum.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright 2016-2017 Chris Foster</span>
-<span class='comment'>//</span>
+</pre><pre class="rust ">
+<span class="comment">//</span>
+<span class="comment">// This file is part of zero_sum.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright 2016-2017 Chris Foster</span>
+<span class="comment">//</span>
 
-<span class='doccomment'>//! Contains the traits and tools to provide analysis of zero-sum games.</span>
+<span class="doccomment">//! Contains the traits and tools to provide analysis of zero-sum games.</span>
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>search</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">search</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>evaluation</span>::{<span class='ident'>Evaluatable</span>, <span class='ident'>Evaluation</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>extrapolation</span>::<span class='ident'>Extrapolatable</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">evaluator</span>::{<span class="ident">Evaluation</span>, <span class="ident">Evaluator</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">extrapolatable</span>::<span class="ident">Extrapolatable</span>;
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>mod</span> <span class='ident'>evaluation</span>;
-<span class='kw'>mod</span> <span class='ident'>extrapolation</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">mod</span> <span class="ident">evaluator</span>;
+<span class="kw">mod</span> <span class="ident">extrapolatable</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -92,55 +92,69 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
-</pre><pre class='rust '>
-<span class='comment'>//</span>
-<span class='comment'>// This file is part of zero_sum.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright 2016-2017 Chris Foster</span>
-<span class='comment'>//</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+</pre><pre class="rust ">
+<span class="comment">//</span>
+<span class="comment">// This file is part of zero_sum.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright 2016-2017 Chris Foster</span>
+<span class="comment">//</span>
 
-<span class='doccomment'>/// A game&#39;s resolution.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is often an `enum` that represents each ending a game can have.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For tic-tac-toe, we might have:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// # extern crate zero_sum;</span>
-<span class='doccomment'>/// # use zero_sum::Resolution;</span>
-<span class='doccomment'>/// # #[derive(PartialEq)]</span>
-<span class='doccomment'>/// enum Mark { X, O }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # #[derive(PartialEq)]</span>
-<span class='doccomment'>/// enum End {</span>
-<span class='doccomment'>///     Win(Mark),</span>
-<span class='doccomment'>///     CatsGame,</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl Resolution for End {</span>
-<span class='doccomment'>///     fn is_win(&amp;self) -&gt; bool { if let End::Win(_) = *self { true } else { false } }</span>
-<span class='doccomment'>///     fn is_draw(&amp;self) -&gt; bool { if *self == End::CatsGame { true } else { false } }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// # fn main() { }</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Resolution</span> {
-    <span class='kw'>fn</span> <span class='ident'>is_win</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+<span class="doccomment">/// A game&#39;s resolution.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is often an `enum` that represents each ending a game can have.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For tic-tac-toe, we might have:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # extern crate zero_sum;</span>
+<span class="doccomment">/// # use zero_sum::Resolution;</span>
+<span class="doccomment">/// # #[derive(PartialEq)]</span>
+<span class="doccomment">/// enum Mark { X, O }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # #[derive(PartialEq)]</span>
+<span class="doccomment">/// enum End {</span>
+<span class="doccomment">///     Win(Mark),</span>
+<span class="doccomment">///     CatsGame,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl Resolution for End {</span>
+<span class="doccomment">///     fn get_winner(&amp;self) -&gt; Option&lt;u8&gt; {</span>
+<span class="doccomment">///         match *self {</span>
+<span class="doccomment">///             End::Win(Mark::X) =&gt; Some(0),</span>
+<span class="doccomment">///             End::Win(Mark::O) =&gt; Some(1),</span>
+<span class="doccomment">///             _ =&gt; None,</span>
+<span class="doccomment">///         }</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">///     fn is_draw(&amp;self) -&gt; bool { if *self == End::CatsGame { true } else { false } }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// # fn main() { }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Resolution</span> {
+    <span class="doccomment">/// Returns the index of the winning player if this `Resolution` represents a win.</span>
+    <span class="kw">fn</span> <span class="ident">get_winner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">is_draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 }
 </pre>
 </section>

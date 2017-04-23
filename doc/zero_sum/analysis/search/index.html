@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>analysis</a></p><script>window.sidebarCurrent = {name: 'search', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module search</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>analysis</a></p><script>window.sidebarCurrent = {name: 'search', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,35 +43,42 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>analysis</a>::<wbr><a class='mod' href=''>search</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>analysis</a>::<wbr><a class="mod" href=''>search</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/zero_sum/analysis/search/mod.rs.html#20-88' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/zero_sum/analysis/search/mod.rs.html#20-83' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Tools for searching the game tree.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Analysis.html'
-                                  title='zero_sum::analysis::search::Analysis'>Analysis</a></td>
+                           <td><a class="struct" href="struct.PvSearch.html"
+                                  title='struct zero_sum::analysis::search::PvSearch'>PvSearch</a></td>
                            <td class='docblock-short'>
-                                <p>The result of a search.</p>
+                                <p>A PVS implementation of <code>Search</code> with a few common optimizations.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.PvSearch.html'
-                                  title='zero_sum::analysis::search::PvSearch'>PvSearch</a></td>
+                           <td><a class="struct" href="struct.PvSearchAnalysis.html"
+                                  title='struct zero_sum::analysis::search::PvSearchAnalysis'>PvSearchAnalysis</a></td>
                            <td class='docblock-short'>
-                                <p>A PVS implementation of <code>Search</code> with a few common optimizations.</p>
+                                <p>The results of the PV search.</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Search.html'
-                                  title='zero_sum::analysis::search::Search'>Search</a></td>
+                           <td><a class="trait" href="trait.Analysis.html"
+                                  title='trait zero_sum::analysis::search::Analysis'>Analysis</a></td>
                            <td class='docblock-short'>
-                                <p>Provides search capabilities</p>
+                                <p>The results of the search.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.Search.html"
+                                  title='trait zero_sum::analysis::search::Search'>Search</a></td>
+                           <td class='docblock-short'>
+                                <p>Provides search capabilities.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

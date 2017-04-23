@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Mark","Either X or O."],["Resolution","Either a win or a cat's game."]],"struct":[["Board","The 3x3 game board."],["Evaluation","The evaluation of a board."],["Ply","The placement of a mark in an empty space."]]});
+initSidebarItems({"enum":[["Mark","Either X or O."],["Resolution","Either a win or a cat's game."]],"struct":[["Board","The 3x3 game board."],["Evaluator","A very simple evaluator.  Gives extra weight to the corners."],["Ply","The placement of a mark in an empty space."]]});

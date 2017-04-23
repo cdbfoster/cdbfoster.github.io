@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -125,89 +125,89 @@
 <span id="80">80</span>
 <span id="81">81</span>
 <span id="82">82</span>
-</pre><pre class='rust '>
-<span class='comment'>//</span>
-<span class='comment'>// This file is part of zero_sum.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright 2016-2017 Chris Foster</span>
-<span class='comment'>//</span>
+</pre><pre class="rust ">
+<span class="comment">//</span>
+<span class="comment">// This file is part of zero_sum.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright 2016-2017 Chris Foster</span>
+<span class="comment">//</span>
 
-<span class='doccomment'>//! The game of [tak](http://cheapass.com/tak/).</span>
+<span class="doccomment">//! The game of [tak](http://cheapass.com/tak/).</span>
 
-<span class='doccomment'>/// The colors of the players.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Color</span> {
-    <span class='ident'>White</span>,
-    <span class='ident'>Black</span>,
+<span class="doccomment">/// The colors of the players.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Color</span> {
+    <span class="ident">White</span>,
+    <span class="ident">Black</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Color</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flip</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Color</span>::<span class='ident'>White</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Black</span>,
-            <span class='ident'>Color</span>::<span class='ident'>Black</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>White</span>,
+<span class="kw">impl</span> <span class="ident">Color</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flip</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Color</span>::<span class="ident">White</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Black</span>,
+            <span class="ident">Color</span>::<span class="ident">Black</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">White</span>,
         }
     }
 }
 
-<span class='doccomment'>/// The types of pieces.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Piece</span> {
-    <span class='ident'>Flatstone</span>(<span class='ident'>Color</span>),
-    <span class='ident'>StandingStone</span>(<span class='ident'>Color</span>),
-    <span class='ident'>Capstone</span>(<span class='ident'>Color</span>),
+<span class="doccomment">/// The types of pieces.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Piece</span> {
+    <span class="ident">Flatstone</span>(<span class="ident">Color</span>),
+    <span class="ident">StandingStone</span>(<span class="ident">Color</span>),
+    <span class="ident">Capstone</span>(<span class="ident">Color</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>Piece</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_color</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Piece</span>::<span class='ident'>Flatstone</span>(<span class='ident'>color</span>) <span class='op'>|</span>
-            <span class='ident'>Piece</span>::<span class='ident'>StandingStone</span>(<span class='ident'>color</span>) <span class='op'>|</span>
-            <span class='ident'>Piece</span>::<span class='ident'>Capstone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='ident'>color</span>,
+<span class="kw">impl</span> <span class="ident">Piece</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Piece</span>::<span class="ident">Flatstone</span>(<span class="ident">color</span>) <span class="op">|</span>
+            <span class="ident">Piece</span>::<span class="ident">StandingStone</span>(<span class="ident">color</span>) <span class="op">|</span>
+            <span class="ident">Piece</span>::<span class="ident">Capstone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">color</span>,
         }
     }
 }
 
-<span class='doccomment'>/// The slidable directions.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Direction</span> {
-    <span class='ident'>North</span>,
-    <span class='ident'>East</span>,
-    <span class='ident'>South</span>,
-    <span class='ident'>West</span>,
+<span class="doccomment">/// The slidable directions.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Direction</span> {
+    <span class="ident">North</span>,
+    <span class="ident">East</span>,
+    <span class="ident">South</span>,
+    <span class="ident">West</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Direction</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_offset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>i8</span>, <span class='ident'>i8</span>) {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Direction</span>::<span class='ident'>North</span> <span class='op'>=&gt;</span> (<span class='number'>0</span>, <span class='number'>1</span>),
-            <span class='ident'>Direction</span>::<span class='ident'>East</span> <span class='op'>=&gt;</span> (<span class='number'>1</span>, <span class='number'>0</span>),
-            <span class='ident'>Direction</span>::<span class='ident'>South</span> <span class='op'>=&gt;</span> (<span class='number'>0</span>, <span class='op'>-</span><span class='number'>1</span>),
-            <span class='ident'>Direction</span>::<span class='ident'>West</span> <span class='op'>=&gt;</span> (<span class='op'>-</span><span class='number'>1</span>, <span class='number'>0</span>),
+<span class="kw">impl</span> <span class="ident">Direction</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">i8</span>, <span class="ident">i8</span>) {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Direction</span>::<span class="ident">North</span> <span class="op">=&gt;</span> (<span class="number">0</span>, <span class="number">1</span>),
+            <span class="ident">Direction</span>::<span class="ident">East</span> <span class="op">=&gt;</span> (<span class="number">1</span>, <span class="number">0</span>),
+            <span class="ident">Direction</span>::<span class="ident">South</span> <span class="op">=&gt;</span> (<span class="number">0</span>, <span class="op">-</span><span class="number">1</span>),
+            <span class="ident">Direction</span>::<span class="ident">West</span> <span class="op">=&gt;</span> (<span class="op">-</span><span class="number">1</span>, <span class="number">0</span>),
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ply</span>::<span class='ident'>Ply</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>resolution</span>::<span class='ident'>Resolution</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>state</span>::{<span class='ident'>Evaluation</span>, <span class='ident'>State</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ply</span>::<span class="ident">Ply</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">resolution</span>::<span class="ident">Resolution</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">state</span>::{<span class="ident">State</span>, <span class="ident">evaluator</span>};
 
-<span class='kw'>mod</span> <span class='ident'>ply</span>;
-<span class='kw'>mod</span> <span class='ident'>resolution</span>;
-<span class='kw'>mod</span> <span class='ident'>state</span>;
+<span class="kw">mod</span> <span class="ident">ply</span>;
+<span class="kw">mod</span> <span class="ident">resolution</span>;
+<span class="kw">mod</span> <span class="ident">state</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

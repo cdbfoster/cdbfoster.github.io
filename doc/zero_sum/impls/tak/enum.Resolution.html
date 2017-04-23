@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>impls</a>::<wbr><a href='index.html'>tak</a></p><script>window.sidebarCurrent = {name: 'Resolution', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum Resolution</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>impls</a>::<wbr><a href='index.html'>tak</a></p><script>window.sidebarCurrent = {name: 'Resolution', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,27 +43,30 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>impls</a>::<wbr><a href='index.html'>tak</a>::<wbr><a class='enum' href=''>Resolution</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>zero_sum</a>::<wbr><a href='../index.html'>impls</a>::<wbr><a href='index.html'>tak</a>::<wbr><a class="enum" href=''>Resolution</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#24-33' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#25-34' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Resolution {
-    Road(<a class='enum' href='../../../zero_sum/impls/tak/enum.Color.html' title='zero_sum::impls::tak::Color'>Color</a>),
-    Flat(<a class='enum' href='../../../zero_sum/impls/tak/enum.Color.html' title='zero_sum::impls::tak::Color'>Color</a>),
+    Road(<a class="enum" href="../../../zero_sum/impls/tak/enum.Color.html" title="enum zero_sum::impls::tak::Color">Color</a>),
+    Flat(<a class="enum" href="../../../zero_sum/impls/tak/enum.Color.html" title="enum zero_sum::impls::tak::Color">Color</a>),
     Draw,
 }</pre><div class='docblock'><p>The ways a game can end.</p>
-</div><h2 class='variants'>Variants</h2>
-<span id='variant.Road' class='variant'><span id='Road.v' class='invisible'><code>Road(<a class='enum' href='../../../zero_sum/impls/tak/enum.Color.html' title='zero_sum::impls::tak::Color'>Color</a>)</code></span></span><div class='docblock'><p>One player has completed a road.</p>
-</div><span id='variant.Flat' class='variant'><span id='Flat.v' class='invisible'><code>Flat(<a class='enum' href='../../../zero_sum/impls/tak/enum.Color.html' title='zero_sum::impls::tak::Color'>Color</a>)</code></span></span><div class='docblock'><p>A player has run out of stones or the board is completely full,
+</div><h2 id='variants' class='variants'>Variants</h2>
+<span id='variant.Road' class='variant'><span id='Road.v' class='invisible'><code>Road(<a class="enum" href="../../../zero_sum/impls/tak/enum.Color.html" title="enum zero_sum::impls::tak::Color">Color</a>)</code></span></span><div class='docblock'><p>One player has completed a road.</p>
+</div><span id='variant.Flat' class='variant'><span id='Flat.v' class='invisible'><code>Flat(<a class="enum" href="../../../zero_sum/impls/tak/enum.Color.html" title="enum zero_sum::impls::tak::Color">Color</a>)</code></span></span><div class='docblock'><p>A player has run out of stones or the board is completely full,
 and one player has more flatstones.</p>
 </div><span id='variant.Draw' class='variant'><span id='Draw.v' class='invisible'><code>Draw</code></span></span><div class='docblock'><p>A player has run out of stones or the board is completely full,
 and neither player has more flatstones.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../../zero_sum/trait.Resolution.html' title='zero_sum::Resolution'>Resolution</a> for <a class='enum' href='../../../zero_sum/impls/tak/enum.Resolution.html' title='zero_sum::impls::tak::Resolution'>Resolution</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#35-52' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.is_win' class='method'><span id='is_win.v' class='invisible'><code>fn <a href='../../../zero_sum/trait.Resolution.html#tymethod.is_win' class='fnname'>is_win</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
-<div class='docblock'><p>Returns true if the value is either a <code>Road</code> or a <code>Flat</code>; false otherwise.</p>
-</div><h4 id='method.is_draw' class='method'><span id='is_draw.v' class='invisible'><code>fn <a href='../../../zero_sum/trait.Resolution.html#tymethod.is_draw' class='fnname'>is_draw</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../../../zero_sum/impls/tak/enum.Resolution.html" title="enum zero_sum::impls::tak::Resolution">Resolution</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#24' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../../zero_sum/trait.Resolution.html" title="trait zero_sum::Resolution">Resolution</a> for <a class="enum" href="../../../zero_sum/impls/tak/enum.Resolution.html" title="enum zero_sum::impls::tak::Resolution">Resolution</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/zero_sum/impls/tak/resolution.rs.html#36-55' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.get_winner' class="method"><span id='get_winner.v' class='invisible'><code>fn <a href='../../../zero_sum/trait.Resolution.html#tymethod.get_winner' class='fnname'>get_winner</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></span></h4>
+<div class='docblock'><p>Returns the index of the winning player (0 for white, 1 for black) if the value is either a <code>Road</code> or a <code>Flat</code>; <code>None</code> otherwise.</p>
+</div><h4 id='method.is_draw' class="method"><span id='is_draw.v' class='invisible'><code>fn <a href='../../../zero_sum/trait.Resolution.html#tymethod.is_draw' class='fnname'>is_draw</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the value is a <code>Draw</code>.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

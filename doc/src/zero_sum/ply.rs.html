@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -90,54 +90,54 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
-</pre><pre class='rust '>
-<span class='comment'>//</span>
-<span class='comment'>// This file is part of zero_sum.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright 2016-2017 Chris Foster</span>
-<span class='comment'>//</span>
+</pre><pre class="rust ">
+<span class="comment">//</span>
+<span class="comment">// This file is part of zero_sum.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright 2016-2017 Chris Foster</span>
+<span class="comment">//</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='ident'>Debug</span>, <span class='ident'>Display</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::<span class='ident'>Hash</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Debug</span>, <span class="ident">Display</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::<span class="ident">Hash</span>;
 
-<span class='doccomment'>/// This trait marks a ply.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Implementors should implement Hash manually, writing only a single u64 to the hasher.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For tic-tac-toe, we might have:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// # extern crate zero_sum;</span>
-<span class='doccomment'>/// # use zero_sum::Ply;</span>
-<span class='doccomment'>/// # #[derive(Clone, Debug, Hash, PartialEq)]</span>
-<span class='doccomment'>/// enum Mark { X, O }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # #[derive(Clone, Debug, Hash, PartialEq)]</span>
-<span class='doccomment'>/// struct Move {</span>
-<span class='doccomment'>///     mark: Mark,</span>
-<span class='doccomment'>///     coords: (usize, usize),</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl Ply for Move { }</span>
-<span class='doccomment'>/// # impl std::fmt::Display for Move { fn fmt(&amp;self, _: &amp;mut std::fmt::Formatter) -&gt; std::fmt::Result { Ok(()) } }</span>
-<span class='doccomment'>/// # fn main() { }</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Ply</span>: <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Display</span> <span class='op'>+</span> <span class='ident'>Hash</span> <span class='op'>+</span> <span class='ident'>PartialEq</span> { }
+<span class="doccomment">/// This trait marks a ply.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Implementors should implement Hash manually, writing only a single u64 to the hasher.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For tic-tac-toe, we might have:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # extern crate zero_sum;</span>
+<span class="doccomment">/// # use zero_sum::Ply;</span>
+<span class="doccomment">/// # #[derive(Clone, Debug, Hash, PartialEq)]</span>
+<span class="doccomment">/// enum Mark { X, O }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # #[derive(Clone, Debug, Hash, PartialEq)]</span>
+<span class="doccomment">/// struct Move {</span>
+<span class="doccomment">///     mark: Mark,</span>
+<span class="doccomment">///     coords: (usize, usize),</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl Ply for Move { }</span>
+<span class="doccomment">/// # impl std::fmt::Display for Move { fn fmt(&amp;self, _: &amp;mut std::fmt::Formatter) -&gt; std::fmt::Result { Ok(()) } }</span>
+<span class="doccomment">/// # fn main() { }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Ply</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Display</span> <span class="op">+</span> <span class="ident">Hash</span> <span class="op">+</span> <span class="ident">PartialEq</span> { }
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

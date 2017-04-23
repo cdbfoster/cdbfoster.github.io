@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -459,502 +459,422 @@
 <span id="414">414</span>
 <span id="415">415</span>
 <span id="416">416</span>
-<span id="417">417</span>
-<span id="418">418</span>
-<span id="419">419</span>
-<span id="420">420</span>
-<span id="421">421</span>
-<span id="422">422</span>
-<span id="423">423</span>
-<span id="424">424</span>
-<span id="425">425</span>
-<span id="426">426</span>
-<span id="427">427</span>
-<span id="428">428</span>
-<span id="429">429</span>
-<span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
-<span id="433">433</span>
-<span id="434">434</span>
-<span id="435">435</span>
-<span id="436">436</span>
-<span id="437">437</span>
-<span id="438">438</span>
-<span id="439">439</span>
-<span id="440">440</span>
-<span id="441">441</span>
-<span id="442">442</span>
-<span id="443">443</span>
-<span id="444">444</span>
-<span id="445">445</span>
-<span id="446">446</span>
-<span id="447">447</span>
-<span id="448">448</span>
-<span id="449">449</span>
-<span id="450">450</span>
-<span id="451">451</span>
-<span id="452">452</span>
-<span id="453">453</span>
-<span id="454">454</span>
-<span id="455">455</span>
-<span id="456">456</span>
-</pre><pre class='rust '>
-<span class='comment'>//</span>
-<span class='comment'>// This file is part of zero_sum.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// zero_sum is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright 2016-2017 Chris Foster</span>
-<span class='comment'>//</span>
+</pre><pre class="rust ">
+<span class="comment">//</span>
+<span class="comment">// This file is part of zero_sum.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// zero_sum is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with zero_sum. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright 2016-2017 Chris Foster</span>
+<span class="comment">//</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>Wrapping</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">num</span>::<span class="ident">Wrapping</span>;
 
-<span class='kw'>use</span> <span class='ident'>impls</span>::<span class='ident'>tak</span>::{<span class='ident'>Color</span>, <span class='ident'>Piece</span>, <span class='ident'>State</span>};
+<span class="kw">use</span> <span class="ident">impls</span>::<span class="ident">tak</span>::{<span class="ident">Color</span>, <span class="ident">Piece</span>, <span class="ident">State</span>};
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Bitmap</span> <span class='op'>=</span> <span class='ident'>u64</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Bitmap</span> <span class="op">=</span> <span class="ident">u64</span>;
 
-<span class='macro'>lazy_static</span><span class='macro'>!</span> {
-    <span class='kw'>pub</span> <span class='kw'>static</span> <span class='kw-2'>ref</span> <span class='ident'>EDGE</span>: [[<span class='ident'>Bitmap</span>; <span class='number'>4</span>]; <span class='number'>9</span>] <span class='op'>=</span> <span class='ident'>generate_edge_masks</span>();
-    <span class='kw'>pub</span> <span class='kw'>static</span> <span class='kw-2'>ref</span> <span class='ident'>BOARD</span>: [<span class='ident'>Bitmap</span>; <span class='number'>9</span>] <span class='op'>=</span> <span class='ident'>generate_board_masks</span>();
+<span class="macro">lazy_static</span><span class="macro">!</span> {
+    <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">EDGE</span>: [[<span class="ident">Bitmap</span>; <span class="number">4</span>]; <span class="number">9</span>] <span class="op">=</span> <span class="ident">generate_edge_masks</span>();
+    <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">BOARD</span>: [<span class="ident">Bitmap</span>; <span class="number">9</span>] <span class="op">=</span> <span class="ident">generate_board_masks</span>();
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Metadata</span> {
-    <span class='kw'>pub</span> <span class='ident'>board_size</span>: <span class='ident'>usize</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Metadata</span> {
+    <span class="kw">pub</span> <span class="ident">board_size</span>: <span class="ident">usize</span>,
 
-    <span class='comment'>// The number of flatstones on the board for each player</span>
-    <span class='kw'>pub</span> <span class='ident'>p1_flatstone_count</span>: <span class='ident'>u8</span>,
-    <span class='kw'>pub</span> <span class='ident'>p2_flatstone_count</span>: <span class='ident'>u8</span>,
+    <span class="comment">// The number of flatstones on the board for each player</span>
+    <span class="kw">pub</span> <span class="ident">p1_flatstone_count</span>: <span class="ident">u8</span>,
+    <span class="kw">pub</span> <span class="ident">p2_flatstone_count</span>: <span class="ident">u8</span>,
 
-    <span class='comment'>// The maps of the flatstones at each layer of the board for each player</span>
-    <span class='kw'>pub</span> <span class='ident'>p1_flatstones</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Bitmap</span><span class='op'>&gt;</span>,
-    <span class='kw'>pub</span> <span class='ident'>p2_flatstones</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Bitmap</span><span class='op'>&gt;</span>,
+    <span class="comment">// The maps of the flatstones at each layer of the board for each player</span>
+    <span class="kw">pub</span> <span class="ident">p1_flatstones</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bitmap</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">p2_flatstones</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bitmap</span><span class="op">&gt;</span>,
 
-    <span class='comment'>// The maps of all standing stones and capstones on the board</span>
-    <span class='kw'>pub</span> <span class='ident'>standing_stones</span>: <span class='ident'>Bitmap</span>,
-    <span class='kw'>pub</span> <span class='ident'>capstones</span>: <span class='ident'>Bitmap</span>,
+    <span class="comment">// The maps of all standing stones and capstones on the board</span>
+    <span class="kw">pub</span> <span class="ident">standing_stones</span>: <span class="ident">Bitmap</span>,
+    <span class="kw">pub</span> <span class="ident">capstones</span>: <span class="ident">Bitmap</span>,
 
-    <span class='comment'>// The map of all top pieces for each player</span>
-    <span class='kw'>pub</span> <span class='ident'>p1_pieces</span>: <span class='ident'>Bitmap</span>,
-    <span class='kw'>pub</span> <span class='ident'>p2_pieces</span>: <span class='ident'>Bitmap</span>,
+    <span class="comment">// The map of all top pieces for each player</span>
+    <span class="kw">pub</span> <span class="ident">p1_pieces</span>: <span class="ident">Bitmap</span>,
+    <span class="kw">pub</span> <span class="ident">p2_pieces</span>: <span class="ident">Bitmap</span>,
 
-    <span class='comment'>// The maps of each discrete island of road-contributing pieces for each player</span>
-    <span class='kw'>pub</span> <span class='ident'>p1_road_groups</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Bitmap</span><span class='op'>&gt;</span>,
-    <span class='kw'>pub</span> <span class='ident'>p2_road_groups</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Bitmap</span><span class='op'>&gt;</span>,
+    <span class="comment">// The maps of each discrete island of road-contributing pieces for each player</span>
+    <span class="kw">pub</span> <span class="ident">p1_road_groups</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bitmap</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">p2_road_groups</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bitmap</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Metadata</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>board_size</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Metadata</span> {
-        <span class='ident'>Metadata</span> {
-            <span class='ident'>board_size</span>: <span class='ident'>board_size</span>,
-            <span class='ident'>p1_flatstone_count</span>: <span class='number'>0</span>,
-            <span class='ident'>p2_flatstone_count</span>: <span class='number'>0</span>,
-            <span class='ident'>p1_flatstones</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>p2_flatstones</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>standing_stones</span>: <span class='number'>0</span>,
-            <span class='ident'>capstones</span>: <span class='number'>0</span>,
-            <span class='ident'>p1_pieces</span>: <span class='number'>0</span>,
-            <span class='ident'>p2_pieces</span>: <span class='number'>0</span>,
-            <span class='ident'>p1_road_groups</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>p2_road_groups</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+<span class="kw">impl</span> <span class="ident">Metadata</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">board_size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Metadata</span> {
+        <span class="ident">Metadata</span> {
+            <span class="ident">board_size</span>: <span class="ident">board_size</span>,
+            <span class="ident">p1_flatstone_count</span>: <span class="number">0</span>,
+            <span class="ident">p2_flatstone_count</span>: <span class="number">0</span>,
+            <span class="ident">p1_flatstones</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">p2_flatstones</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">standing_stones</span>: <span class="number">0</span>,
+            <span class="ident">capstones</span>: <span class="number">0</span>,
+            <span class="ident">p1_pieces</span>: <span class="number">0</span>,
+            <span class="ident">p2_pieces</span>: <span class="number">0</span>,
+            <span class="ident">p1_road_groups</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">p2_road_groups</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_state</span>(<span class='ident'>state</span>: <span class='kw-2'>&amp;</span><span class='ident'>State</span>) <span class='op'>-&gt;</span> <span class='ident'>Metadata</span> {
-        <span class='kw'>let</span> <span class='ident'>board_size</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>board</span>.<span class='ident'>len</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_state</span>(<span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="ident">State</span>) <span class="op">-&gt;</span> <span class="ident">Metadata</span> {
+        <span class="kw">let</span> <span class="ident">board_size</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">board</span>.<span class="ident">len</span>();
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>metadata</span> <span class='op'>=</span> <span class='ident'>Metadata</span>::<span class='ident'>new</span>(<span class='ident'>board_size</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">Metadata</span>::<span class="ident">new</span>(<span class="ident">board_size</span>);
 
-        <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>board_size</span> {
-            <span class='kw'>for</span> <span class='ident'>y</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>board_size</span> {
-                <span class='kw'>for</span> <span class='ident'>z</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>state</span>.<span class='ident'>board</span>[<span class='ident'>x</span>][<span class='ident'>y</span>].<span class='ident'>len</span>() {
-                    <span class='kw'>if</span> <span class='ident'>z</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                        <span class='kw'>match</span> <span class='ident'>state</span>.<span class='ident'>board</span>[<span class='ident'>x</span>][<span class='ident'>y</span>][<span class='ident'>z</span> <span class='op'>-</span> <span class='number'>1</span>] {
-                            <span class='ident'>Piece</span>::<span class='ident'>Flatstone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='ident'>metadata</span>.<span class='ident'>cover_flatstone</span>(
-                                <span class='ident'>color</span>, <span class='ident'>x</span>, <span class='ident'>y</span>,
+        <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">board_size</span> {
+            <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">board_size</span> {
+                <span class="kw">for</span> <span class="ident">z</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">state</span>.<span class="ident">board</span>[<span class="ident">x</span>][<span class="ident">y</span>].<span class="ident">len</span>() {
+                    <span class="kw">if</span> <span class="ident">z</span> <span class="op">&gt;</span> <span class="number">0</span> {
+                        <span class="kw">match</span> <span class="ident">state</span>.<span class="ident">board</span>[<span class="ident">x</span>][<span class="ident">y</span>][<span class="ident">z</span> <span class="op">-</span> <span class="number">1</span>] {
+                            <span class="ident">Piece</span>::<span class="ident">Flatstone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">metadata</span>.<span class="ident">cover_flatstone</span>(
+                                <span class="ident">color</span>, <span class="ident">x</span>, <span class="ident">y</span>,
                             ),
-                            <span class='kw-2'>ref</span> <span class='ident'>block</span> <span class='op'>=&gt;</span> <span class='ident'>metadata</span>.<span class='ident'>remove_blocking_stone</span>(<span class='ident'>block</span>, <span class='ident'>x</span>, <span class='ident'>y</span>),
+                            <span class="kw-2">ref</span> <span class="ident">block</span> <span class="op">=&gt;</span> <span class="ident">metadata</span>.<span class="ident">remove_blocking_stone</span>(<span class="ident">block</span>, <span class="ident">x</span>, <span class="ident">y</span>),
                         }
                     }
 
-                    <span class='kw'>match</span> <span class='ident'>state</span>.<span class='ident'>board</span>[<span class='ident'>x</span>][<span class='ident'>y</span>][<span class='ident'>z</span>] {
-                        <span class='ident'>Piece</span>::<span class='ident'>Flatstone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='ident'>metadata</span>.<span class='ident'>add_flatstone</span>(
-                            <span class='ident'>color</span>, <span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>z</span>,
+                    <span class="kw">match</span> <span class="ident">state</span>.<span class="ident">board</span>[<span class="ident">x</span>][<span class="ident">y</span>][<span class="ident">z</span>] {
+                        <span class="ident">Piece</span>::<span class="ident">Flatstone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">metadata</span>.<span class="ident">add_flatstone</span>(
+                            <span class="ident">color</span>, <span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>,
                         ),
-                        <span class='kw-2'>ref</span> <span class='ident'>block</span> <span class='op'>=&gt;</span> <span class='ident'>metadata</span>.<span class='ident'>add_blocking_stone</span>(<span class='ident'>block</span>, <span class='ident'>x</span>, <span class='ident'>y</span>),
+                        <span class="kw-2">ref</span> <span class="ident">block</span> <span class="op">=&gt;</span> <span class="ident">metadata</span>.<span class="ident">add_blocking_stone</span>(<span class="ident">block</span>, <span class="ident">x</span>, <span class="ident">y</span>),
                     }
                 }
             }
         }
 
-        <span class='ident'>metadata</span>
+        <span class="ident">metadata</span>.<span class="ident">calculate_road_groups</span>();
+
+        <span class="ident">metadata</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_flatstone</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>z</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>match</span> <span class='ident'>color</span> {
-            <span class='ident'>Color</span>::<span class='ident'>White</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p1_flatstone_count</span> <span class='op'>+=</span> <span class='number'>1</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_flatstone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">z</span>: <span class="ident">usize</span>) {
+        <span class="kw">match</span> <span class="ident">color</span> {
+            <span class="ident">Color</span>::<span class="ident">White</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p1_flatstone_count</span> <span class="op">+=</span> <span class="number">1</span>;
 
-                <span class='kw'>if</span> <span class='ident'>z</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>.<span class='ident'>len</span>() {
-                    <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..(<span class='ident'>z</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>1</span>) {
-                        <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
+                <span class="kw">if</span> <span class="ident">z</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">p1_flatstones</span>.<span class="ident">len</span>() {
+                    <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..(<span class="ident">z</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">p1_flatstones</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>) {
+                        <span class="self">self</span>.<span class="ident">p1_flatstones</span>.<span class="ident">push</span>(<span class="number">0</span>);
                     }
                 }
 
-                <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>[<span class='ident'>z</span>].<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_flatstones</span>[<span class="ident">z</span>].<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            <span class='ident'>Color</span>::<span class='ident'>Black</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p2_flatstone_count</span> <span class='op'>+=</span> <span class='number'>1</span>;
+            <span class="ident">Color</span>::<span class="ident">Black</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p2_flatstone_count</span> <span class="op">+=</span> <span class="number">1</span>;
 
-                <span class='kw'>if</span> <span class='ident'>z</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>.<span class='ident'>len</span>() {
-                    <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..(<span class='ident'>z</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>1</span>) {
-                        <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
+                <span class="kw">if</span> <span class="ident">z</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">p2_flatstones</span>.<span class="ident">len</span>() {
+                    <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..(<span class="ident">z</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">p2_flatstones</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>) {
+                        <span class="self">self</span>.<span class="ident">p2_flatstones</span>.<span class="ident">push</span>(<span class="number">0</span>);
                     }
                 }
 
-                <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>[<span class='ident'>z</span>].<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_flatstones</span>[<span class="ident">z</span>].<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove_flatstone</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>z</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>match</span> <span class='ident'>color</span> {
-            <span class='ident'>Color</span>::<span class='ident'>White</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p1_flatstone_count</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>[<span class='ident'>z</span>].<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_flatstone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">z</span>: <span class="ident">usize</span>) {
+        <span class="kw">match</span> <span class="ident">color</span> {
+            <span class="ident">Color</span>::<span class="ident">White</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p1_flatstone_count</span> <span class="op">-=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">p1_flatstones</span>[<span class="ident">z</span>].<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            <span class='ident'>Color</span>::<span class='ident'>Black</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p2_flatstone_count</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>[<span class='ident'>z</span>].<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-            },
-        }
-    }
-
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reveal_flatstone</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>match</span> <span class='ident'>color</span> {
-            <span class='ident'>Color</span>::<span class='ident'>White</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p1_flatstone_count</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-            },
-            <span class='ident'>Color</span>::<span class='ident'>Black</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p2_flatstone_count</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+            <span class="ident">Color</span>::<span class="ident">Black</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p2_flatstone_count</span> <span class="op">-=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">p2_flatstones</span>[<span class="ident">z</span>].<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cover_flatstone</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>Color</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>match</span> <span class='ident'>color</span> {
-            <span class='ident'>Color</span>::<span class='ident'>White</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p1_flatstone_count</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reveal_flatstone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>) {
+        <span class="kw">match</span> <span class="ident">color</span> {
+            <span class="ident">Color</span>::<span class="ident">White</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p1_flatstone_count</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            <span class='ident'>Color</span>::<span class='ident'>Black</span> <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>p2_flatstone_count</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+            <span class="ident">Color</span>::<span class="ident">Black</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p2_flatstone_count</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_blocking_stone</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>piece</span>: <span class='kw-2'>&amp;</span><span class='ident'>Piece</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>piece</span> {
-            <span class='ident'>Piece</span>::<span class='ident'>StandingStone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>color</span> <span class='op'>==</span> <span class='ident'>Color</span>::<span class='ident'>White</span> {
-                <span class='self'>self</span>.<span class='ident'>standing_stones</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-            } <span class='kw'>else</span> {
-                <span class='self'>self</span>.<span class='ident'>standing_stones</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cover_flatstone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>) {
+        <span class="kw">match</span> <span class="ident">color</span> {
+            <span class="ident">Color</span>::<span class="ident">White</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p1_flatstone_count</span> <span class="op">-=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            <span class='ident'>Piece</span>::<span class='ident'>Capstone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>color</span> <span class='op'>==</span> <span class='ident'>Color</span>::<span class='ident'>White</span> {
-                <span class='self'>self</span>.<span class='ident'>capstones</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-            } <span class='kw'>else</span> {
-                <span class='self'>self</span>.<span class='ident'>capstones</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>set</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+            <span class="ident">Color</span>::<span class="ident">Black</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">p2_flatstone_count</span> <span class="op">-=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;StateAnalysis.add_blocking_stone was passed a flatstone!&quot;</span>),
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove_blocking_stone</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>piece</span>: <span class='kw-2'>&amp;</span><span class='ident'>Piece</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>piece</span> {
-            <span class='ident'>Piece</span>::<span class='ident'>StandingStone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>color</span> <span class='op'>==</span> <span class='ident'>Color</span>::<span class='ident'>White</span> {
-                <span class='self'>self</span>.<span class='ident'>standing_stones</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-            } <span class='kw'>else</span> {
-                <span class='self'>self</span>.<span class='ident'>standing_stones</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_blocking_stone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">piece</span>: <span class="kw-2">&amp;</span><span class="ident">Piece</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>) {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">piece</span> {
+            <span class="ident">Piece</span>::<span class="ident">StandingStone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="kw">if</span> <span class="ident">color</span> <span class="op">==</span> <span class="ident">Color</span>::<span class="ident">White</span> {
+                <span class="self">self</span>.<span class="ident">standing_stones</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+            } <span class="kw">else</span> {
+                <span class="self">self</span>.<span class="ident">standing_stones</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            <span class='ident'>Piece</span>::<span class='ident'>Capstone</span>(<span class='ident'>color</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>color</span> <span class='op'>==</span> <span class='ident'>Color</span>::<span class='ident'>White</span> {
-                <span class='self'>self</span>.<span class='ident'>capstones</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p1_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-            } <span class='kw'>else</span> {
-                <span class='self'>self</span>.<span class='ident'>capstones</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
-                <span class='self'>self</span>.<span class='ident'>p2_pieces</span>.<span class='ident'>clear</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='self'>self</span>.<span class='ident'>board_size</span>);
+            <span class="ident">Piece</span>::<span class="ident">Capstone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="kw">if</span> <span class="ident">color</span> <span class="op">==</span> <span class="ident">Color</span>::<span class="ident">White</span> {
+                <span class="self">self</span>.<span class="ident">capstones</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+            } <span class="kw">else</span> {
+                <span class="self">self</span>.<span class="ident">capstones</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">set</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
             },
-            _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;StateAnalysis.remove_blocking_stone was passed a flatstone!&quot;</span>),
+            _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;StateAnalysis.add_blocking_stone was passed a flatstone!&quot;</span>),
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>calculate_road_groups</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>p1_road_groups</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>p1_pieces</span> <span class='kw-2'>&amp;</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>standing_stones</span>).<span class='ident'>get_groups</span>(<span class='self'>self</span>.<span class='ident'>board_size</span>);
-        <span class='self'>self</span>.<span class='ident'>p2_road_groups</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>p2_pieces</span> <span class='kw-2'>&amp;</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>standing_stones</span>).<span class='ident'>get_groups</span>(<span class='self'>self</span>.<span class='ident'>board_size</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_blocking_stone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">piece</span>: <span class="kw-2">&amp;</span><span class="ident">Piece</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>) {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">piece</span> {
+            <span class="ident">Piece</span>::<span class="ident">StandingStone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="kw">if</span> <span class="ident">color</span> <span class="op">==</span> <span class="ident">Color</span>::<span class="ident">White</span> {
+                <span class="self">self</span>.<span class="ident">standing_stones</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+            } <span class="kw">else</span> {
+                <span class="self">self</span>.<span class="ident">standing_stones</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+            },
+            <span class="ident">Piece</span>::<span class="ident">Capstone</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="kw">if</span> <span class="ident">color</span> <span class="op">==</span> <span class="ident">Color</span>::<span class="ident">White</span> {
+                <span class="self">self</span>.<span class="ident">capstones</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p1_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+            } <span class="kw">else</span> {
+                <span class="self">self</span>.<span class="ident">capstones</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+                <span class="self">self</span>.<span class="ident">p2_pieces</span>.<span class="ident">clear</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="self">self</span>.<span class="ident">board_size</span>);
+            },
+            _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;StateAnalysis.remove_blocking_stone was passed a flatstone!&quot;</span>),
+        }
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">calculate_road_groups</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">p1_road_groups</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">p1_pieces</span> <span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">standing_stones</span>).<span class="ident">get_groups</span>(<span class="self">self</span>.<span class="ident">board_size</span>);
+        <span class="self">self</span>.<span class="ident">p2_road_groups</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">p2_pieces</span> <span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">standing_stones</span>).<span class="ident">get_groups</span>(<span class="self">self</span>.<span class="ident">board_size</span>);
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>Metadata</span> {
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Metadata</span> {
-        <span class='ident'>Metadata</span> {
-            <span class='ident'>board_size</span>: <span class='self'>self</span>.<span class='ident'>board_size</span>,
-            <span class='ident'>p1_flatstone_count</span>: <span class='self'>self</span>.<span class='ident'>p1_flatstone_count</span>,
-            <span class='ident'>p2_flatstone_count</span>: <span class='self'>self</span>.<span class='ident'>p2_flatstone_count</span>,
-            <span class='ident'>p1_flatstones</span>: <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>p2_flatstones</span>: <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>standing_stones</span>: <span class='self'>self</span>.<span class='ident'>standing_stones</span>,
-            <span class='ident'>capstones</span>: <span class='self'>self</span>.<span class='ident'>capstones</span>,
-            <span class='ident'>p1_pieces</span>: <span class='self'>self</span>.<span class='ident'>p1_pieces</span>,
-            <span class='ident'>p2_pieces</span>: <span class='self'>self</span>.<span class='ident'>p2_pieces</span>,
-            <span class='ident'>p1_road_groups</span>: <span class='self'>self</span>.<span class='ident'>p1_road_groups</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>p2_road_groups</span>: <span class='self'>self</span>.<span class='ident'>p2_road_groups</span>.<span class='ident'>clone</span>(),
+<span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Metadata</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Metadata</span> {
+        <span class="ident">Metadata</span> {
+            <span class="ident">board_size</span>: <span class="self">self</span>.<span class="ident">board_size</span>,
+            <span class="ident">p1_flatstone_count</span>: <span class="self">self</span>.<span class="ident">p1_flatstone_count</span>,
+            <span class="ident">p2_flatstone_count</span>: <span class="self">self</span>.<span class="ident">p2_flatstone_count</span>,
+            <span class="ident">p1_flatstones</span>: <span class="self">self</span>.<span class="ident">p1_flatstones</span>.<span class="ident">clone</span>(),
+            <span class="ident">p2_flatstones</span>: <span class="self">self</span>.<span class="ident">p2_flatstones</span>.<span class="ident">clone</span>(),
+            <span class="ident">standing_stones</span>: <span class="self">self</span>.<span class="ident">standing_stones</span>,
+            <span class="ident">capstones</span>: <span class="self">self</span>.<span class="ident">capstones</span>,
+            <span class="ident">p1_pieces</span>: <span class="self">self</span>.<span class="ident">p1_pieces</span>,
+            <span class="ident">p2_pieces</span>: <span class="self">self</span>.<span class="ident">p2_pieces</span>,
+            <span class="ident">p1_road_groups</span>: <span class="self">self</span>.<span class="ident">p1_road_groups</span>.<span class="ident">clone</span>(),
+            <span class="ident">p2_road_groups</span>: <span class="self">self</span>.<span class="ident">p2_road_groups</span>.<span class="ident">clone</span>(),
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>clone_from</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>source</span>: <span class='kw-2'>&amp;</span><span class='ident'>Metadata</span>) {
-        <span class='self'>self</span>.<span class='ident'>board_size</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>board_size</span>;
-        <span class='self'>self</span>.<span class='ident'>p1_flatstone_count</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>p1_flatstone_count</span>;
-        <span class='self'>self</span>.<span class='ident'>p2_flatstone_count</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>p2_flatstone_count</span>;
-        <span class='self'>self</span>.<span class='ident'>p1_flatstones</span>.<span class='ident'>clone_from</span>(<span class='kw-2'>&amp;</span><span class='ident'>source</span>.<span class='ident'>p1_flatstones</span>);
-        <span class='self'>self</span>.<span class='ident'>p2_flatstones</span>.<span class='ident'>clone_from</span>(<span class='kw-2'>&amp;</span><span class='ident'>source</span>.<span class='ident'>p2_flatstones</span>);
-        <span class='self'>self</span>.<span class='ident'>standing_stones</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>standing_stones</span>;
-        <span class='self'>self</span>.<span class='ident'>capstones</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>capstones</span>;
-        <span class='self'>self</span>.<span class='ident'>p1_pieces</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>p1_pieces</span>;
-        <span class='self'>self</span>.<span class='ident'>p2_pieces</span> <span class='op'>=</span> <span class='ident'>source</span>.<span class='ident'>p2_pieces</span>;
-        <span class='self'>self</span>.<span class='ident'>p1_road_groups</span>.<span class='ident'>clone_from</span>(<span class='kw-2'>&amp;</span><span class='ident'>source</span>.<span class='ident'>p1_road_groups</span>);
-        <span class='self'>self</span>.<span class='ident'>p2_road_groups</span>.<span class='ident'>clone_from</span>(<span class='kw-2'>&amp;</span><span class='ident'>source</span>.<span class='ident'>p2_road_groups</span>);
+    <span class="kw">fn</span> <span class="ident">clone_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="ident">Metadata</span>) {
+        <span class="self">self</span>.<span class="ident">board_size</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">board_size</span>;
+        <span class="self">self</span>.<span class="ident">p1_flatstone_count</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">p1_flatstone_count</span>;
+        <span class="self">self</span>.<span class="ident">p2_flatstone_count</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">p2_flatstone_count</span>;
+        <span class="self">self</span>.<span class="ident">p1_flatstones</span>.<span class="ident">clone_from</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">p1_flatstones</span>);
+        <span class="self">self</span>.<span class="ident">p2_flatstones</span>.<span class="ident">clone_from</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">p2_flatstones</span>);
+        <span class="self">self</span>.<span class="ident">standing_stones</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">standing_stones</span>;
+        <span class="self">self</span>.<span class="ident">capstones</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">capstones</span>;
+        <span class="self">self</span>.<span class="ident">p1_pieces</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">p1_pieces</span>;
+        <span class="self">self</span>.<span class="ident">p2_pieces</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">p2_pieces</span>;
+        <span class="self">self</span>.<span class="ident">p1_road_groups</span>.<span class="ident">clone_from</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">p1_road_groups</span>);
+        <span class="self">self</span>.<span class="ident">p2_road_groups</span>.<span class="ident">clone_from</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">p2_road_groups</span>);
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>BitmapInterface</span> {
-    <span class='kw'>fn</span> <span class='ident'>set</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>);
-    <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>);
-    <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>get_groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Bitmap</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>get_population</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span>;
-    <span class='kw'>fn</span> <span class='ident'>get_dimensions</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>);
-    <span class='kw'>fn</span> <span class='ident'>grow</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>bounds</span>: <span class='ident'>Bitmap</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Bitmap</span>;
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BitmapInterface</span> {
+    <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="ident">usize</span>);
+    <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="ident">usize</span>);
+    <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">get_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bitmap</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">get_population</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u8</span>;
+    <span class="kw">fn</span> <span class="ident">get_dimensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>);
+    <span class="kw">fn</span> <span class="ident">grow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bounds</span>: <span class="ident">Bitmap</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Bitmap</span>;
 }
 
-<span class='kw'>impl</span> <span class='ident'>BitmapInterface</span> <span class='kw'>for</span> <span class='ident'>Bitmap</span> {
-    <span class='kw'>fn</span> <span class='ident'>set</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) {
-        <span class='op'>*</span><span class='self'>self</span> <span class='op'>|=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> ((<span class='ident'>stride</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='ident'>x</span>) <span class='op'>+</span> <span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>stride</span>);
+<span class="kw">impl</span> <span class="ident">BitmapInterface</span> <span class="kw">for</span> <span class="ident">Bitmap</span> {
+    <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">|=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> ((<span class="ident">stride</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">x</span>) <span class="op">+</span> <span class="ident">y</span> <span class="op">*</span> <span class="ident">stride</span>);
     }
 
-    <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) {
-        <span class='op'>*</span><span class='self'>self</span> <span class='op'>&amp;=</span> <span class='op'>!</span>(<span class='number'>1</span> <span class='op'>&lt;&lt;</span> ((<span class='ident'>stride</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='ident'>x</span>) <span class='op'>+</span> <span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>stride</span>));
+    <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">&amp;=</span> <span class="op">!</span>(<span class="number">1</span> <span class="op">&lt;&lt;</span> ((<span class="ident">stride</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">x</span>) <span class="op">+</span> <span class="ident">y</span> <span class="op">*</span> <span class="ident">stride</span>));
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        (<span class='self'>self</span> <span class='op'>&gt;&gt;</span> ((<span class='ident'>stride</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='ident'>x</span>) <span class='op'>+</span> <span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>stride</span>)) <span class='kw-2'>&amp;</span> <span class='number'>1</span> <span class='op'>==</span> <span class='number'>1</span>
+    <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        (<span class="self">self</span> <span class="op">&gt;&gt;</span> ((<span class="ident">stride</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">x</span>) <span class="op">+</span> <span class="ident">y</span> <span class="op">*</span> <span class="ident">stride</span>)) <span class="op">&amp;</span> <span class="number">1</span> <span class="op">==</span> <span class="number">1</span>
     }
 
-    <span class='comment'>// Returns a map of each discrete group larger than a single bit</span>
-    <span class='kw'>fn</span> <span class='ident'>get_groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Bitmap</span><span class='op'>&gt;</span> {
-        <span class='kw'>fn</span> <span class='ident'>pop_bit</span>(<span class='ident'>map</span>: <span class='ident'>Bitmap</span>) <span class='op'>-&gt;</span> (<span class='ident'>Bitmap</span>, <span class='ident'>Bitmap</span>) {
-            <span class='kw'>let</span> <span class='ident'>remainder</span> <span class='op'>=</span> <span class='ident'>map</span> <span class='kw-2'>&amp;</span> (<span class='ident'>map</span> <span class='op'>-</span> <span class='number'>1</span>);
-            <span class='kw'>let</span> <span class='ident'>bit</span> <span class='op'>=</span> <span class='ident'>map</span> <span class='kw-2'>&amp;</span> <span class='op'>!</span><span class='ident'>remainder</span>;
-            (<span class='ident'>bit</span>, <span class='ident'>remainder</span>)
+    <span class="comment">// Returns a map of each discrete group</span>
+    <span class="kw">fn</span> <span class="ident">get_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bitmap</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">pop_bit</span>(<span class="ident">map</span>: <span class="ident">Bitmap</span>) <span class="op">-&gt;</span> (<span class="ident">Bitmap</span>, <span class="ident">Bitmap</span>) {
+            <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">map</span> <span class="op">&amp;</span> (<span class="ident">map</span> <span class="op">-</span> <span class="number">1</span>);
+            <span class="kw">let</span> <span class="ident">bit</span> <span class="op">=</span> <span class="ident">map</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">remainder</span>;
+            (<span class="ident">bit</span>, <span class="ident">remainder</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>flood</span>(<span class='ident'>bit</span>: <span class='ident'>Bitmap</span>, <span class='ident'>bounds</span>: <span class='ident'>Bitmap</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Bitmap</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>total</span> <span class='op'>=</span> <span class='ident'>bit</span>;
+        <span class="kw">fn</span> <span class="ident">flood</span>(<span class="ident">bit</span>: <span class="ident">Bitmap</span>, <span class="ident">bounds</span>: <span class="ident">Bitmap</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Bitmap</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="ident">bit</span>;
 
-	        <span class='kw'>loop</span> {
-	            <span class='kw'>let</span> <span class='ident'>next</span> <span class='op'>=</span> <span class='ident'>total</span>.<span class='ident'>grow</span>(<span class='ident'>bounds</span>, <span class='ident'>stride</span>);
+	        <span class="kw">loop</span> {
+	            <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">total</span>.<span class="ident">grow</span>(<span class="ident">bounds</span>, <span class="ident">stride</span>);
 
-	            <span class='kw'>if</span> <span class='ident'>next</span> <span class='op'>==</span> <span class='ident'>total</span> {
-	                <span class='kw'>break</span>;
+	            <span class="kw">if</span> <span class="ident">next</span> <span class="op">==</span> <span class="ident">total</span> {
+	                <span class="kw">break</span>;
                 }
 
-                <span class='ident'>total</span> <span class='op'>=</span> <span class='ident'>next</span>;
+                <span class="ident">total</span> <span class="op">=</span> <span class="ident">next</span>;
             }
 
-            <span class='ident'>total</span>
+            <span class="ident">total</span>
         }
 
-        <span class='kw'>if</span> <span class='op'>*</span><span class='self'>self</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+        <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
         }
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>groups</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>map</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">groups</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
 
-        <span class='kw'>loop</span> {
-            <span class='kw'>let</span> (<span class='ident'>bit</span>, <span class='kw-2'>mut</span> <span class='ident'>remainder</span>) <span class='op'>=</span> <span class='ident'>pop_bit</span>(<span class='ident'>map</span>);
+        <span class="kw">loop</span> {
+            <span class="kw">let</span> (<span class="ident">bit</span>, <span class="kw-2">mut</span> <span class="ident">remainder</span>) <span class="op">=</span> <span class="ident">pop_bit</span>(<span class="ident">map</span>);
 
-            <span class='kw'>let</span> <span class='ident'>group</span> <span class='op'>=</span> <span class='ident'>flood</span>(<span class='ident'>bit</span>, <span class='ident'>map</span>, <span class='ident'>stride</span>);
+            <span class="kw">let</span> <span class="ident">group</span> <span class="op">=</span> <span class="ident">flood</span>(<span class="ident">bit</span>, <span class="ident">map</span>, <span class="ident">stride</span>);
 
-            <span class='ident'>groups</span>.<span class='ident'>push</span>(<span class='ident'>group</span>);
+            <span class="ident">groups</span>.<span class="ident">push</span>(<span class="ident">group</span>);
 
-            <span class='ident'>remainder</span> <span class='op'>&amp;=</span> <span class='op'>!</span><span class='ident'>group</span>;
-            <span class='kw'>if</span> <span class='ident'>remainder</span> <span class='op'>==</span> <span class='number'>0</span> {
-                <span class='kw'>break</span>;
+            <span class="ident">remainder</span> <span class="op">&amp;=</span> <span class="op">!</span><span class="ident">group</span>;
+            <span class="kw">if</span> <span class="ident">remainder</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="kw">break</span>;
             }
 
-            <span class='ident'>map</span> <span class='op'>=</span> <span class='ident'>remainder</span>;
+            <span class="ident">map</span> <span class="op">=</span> <span class="ident">remainder</span>;
         }
 
-        <span class='ident'>groups</span>
+        <span class="ident">groups</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_population</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> { <span class='comment'>// XXX use count_ones if we can target a native cpu</span>
-        <span class='comment'>// Utter magic.</span>
-        <span class='comment'>// https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel</span>
+    <span class="kw">fn</span> <span class="ident">get_population</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u8</span> { <span class="comment">// XXX use count_ones if we can target a native cpu</span>
+        <span class="comment">// Utter magic.</span>
+        <span class="comment">// https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel</span>
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='self'>self</span> <span class='op'>-</span> ((<span class='self'>self</span> <span class='op'>&gt;&gt;</span> <span class='number'>1</span>) <span class='kw'>as</span> <span class='ident'>u64</span> <span class='kw-2'>&amp;</span> <span class='number'>0x555555555555555</span>);
-        <span class='ident'>x</span> <span class='op'>=</span> ((<span class='ident'>x</span> <span class='op'>&gt;&gt;</span> <span class='number'>2</span>) <span class='kw-2'>&amp;</span> <span class='number'>0x3333333333333333</span>) <span class='op'>+</span> (<span class='ident'>x</span> <span class='kw-2'>&amp;</span> <span class='number'>0x3333333333333333</span>);
-        <span class='ident'>x</span> <span class='op'>+=</span> <span class='ident'>x</span> <span class='op'>&gt;&gt;</span> <span class='number'>4</span>;
-        <span class='ident'>x</span> <span class='op'>&amp;=</span> <span class='number'>0x0F0F0F0F0F0F0F0F</span>;
-        <span class='kw'>let</span> <span class='ident'>overflow_x</span> <span class='op'>=</span> <span class='ident'>Wrapping</span>(<span class='ident'>x</span>) <span class='op'>*</span> <span class='ident'>Wrapping</span>(<span class='number'>0x0101010101010101</span>); <span class='comment'>// This can overflow, hence Wrapping</span>
-        <span class='kw'>let</span> <span class='ident'>Wrapping</span>(<span class='ident'>population</span>) <span class='op'>=</span> <span class='ident'>overflow_x</span> <span class='op'>&gt;&gt;</span> <span class='number'>56</span>;
-        <span class='ident'>population</span> <span class='kw'>as</span> <span class='ident'>u8</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> <span class="op">=</span> <span class="self">self</span> <span class="op">-</span> ((<span class="self">self</span> <span class="op">&gt;&gt;</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&amp;</span> <span class="number">0x555555555555555</span>);
+        <span class="ident">x</span> <span class="op">=</span> ((<span class="ident">x</span> <span class="op">&gt;&gt;</span> <span class="number">2</span>) <span class="op">&amp;</span> <span class="number">0x3333333333333333</span>) <span class="op">+</span> (<span class="ident">x</span> <span class="op">&amp;</span> <span class="number">0x3333333333333333</span>);
+        <span class="ident">x</span> <span class="op">+=</span> <span class="ident">x</span> <span class="op">&gt;&gt;</span> <span class="number">4</span>;
+        <span class="ident">x</span> <span class="op">&amp;=</span> <span class="number">0x0F0F0F0F0F0F0F0F</span>;
+        <span class="kw">let</span> <span class="ident">overflow_x</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="ident">x</span>) <span class="op">*</span> <span class="ident">Wrapping</span>(<span class="number">0x0101010101010101</span>); <span class="comment">// This can overflow, hence Wrapping</span>
+        <span class="kw">let</span> <span class="ident">Wrapping</span>(<span class="ident">population</span>) <span class="op">=</span> <span class="ident">overflow_x</span> <span class="op">&gt;&gt;</span> <span class="number">56</span>;
+        <span class="ident">population</span> <span class="kw">as</span> <span class="ident">u8</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_dimensions</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>) {
-        <span class='kw'>use</span> <span class='ident'>impls</span>::<span class='ident'>tak</span>::<span class='ident'>Direction</span>::<span class='op'>*</span>;
+    <span class="kw">fn</span> <span class="ident">get_dimensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+        <span class="kw">use</span> <span class="ident">impls</span>::<span class="ident">tak</span>::<span class="ident">Direction</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>if</span> <span class='op'>*</span><span class='self'>self</span> <span class='op'>!=</span> <span class='number'>0</span> {
-            <span class='kw'>let</span> <span class='ident'>width</span> <span class='op'>=</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='ident'>EDGE</span>[<span class='ident'>stride</span>][<span class='ident'>West</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
-                <span class='kw'>while</span> <span class='op'>*</span><span class='self'>self</span> <span class='kw-2'>&amp;</span> <span class='ident'>mask</span> <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='ident'>mask</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
+        <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">!=</span> <span class="number">0</span> {
+            <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">EDGE</span>[<span class="ident">stride</span>][<span class="ident">West</span> <span class="kw">as</span> <span class="ident">usize</span>];
+                <span class="kw">while</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&amp;</span> <span class="ident">mask</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="ident">mask</span> <span class="op">&gt;&gt;=</span> <span class="number">1</span>;
                 }
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>width</span> <span class='op'>=</span> <span class='number'>0</span>;
-                <span class='kw'>while</span> <span class='ident'>mask</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='op'>*</span><span class='self'>self</span> <span class='kw-2'>&amp;</span> <span class='ident'>mask</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>width</span> <span class='op'>&lt;</span> <span class='ident'>stride</span> {
-                    <span class='ident'>mask</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
-                    <span class='ident'>width</span> <span class='op'>+=</span> <span class='number'>1</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">width</span> <span class="op">=</span> <span class="number">0</span>;
+                <span class="kw">while</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&amp;</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">width</span> <span class="op">&lt;</span> <span class="ident">stride</span> {
+                    <span class="ident">mask</span> <span class="op">&gt;&gt;=</span> <span class="number">1</span>;
+                    <span class="ident">width</span> <span class="op">+=</span> <span class="number">1</span>;
                 }
 
-                <span class='ident'>width</span>
+                <span class="ident">width</span>
             };
 
-            <span class='kw'>let</span> <span class='ident'>height</span> <span class='op'>=</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='ident'>EDGE</span>[<span class='ident'>stride</span>][<span class='ident'>North</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
-                <span class='kw'>while</span> <span class='op'>*</span><span class='self'>self</span> <span class='kw-2'>&amp;</span> <span class='ident'>mask</span> <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='ident'>mask</span> <span class='op'>&gt;&gt;=</span> <span class='ident'>stride</span>;
+            <span class="kw">let</span> <span class="ident">height</span> <span class="op">=</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mask</span> <span class="op">=</span> <span class="ident">EDGE</span>[<span class="ident">stride</span>][<span class="ident">North</span> <span class="kw">as</span> <span class="ident">usize</span>];
+                <span class="kw">while</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&amp;</span> <span class="ident">mask</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="ident">mask</span> <span class="op">&gt;&gt;=</span> <span class="ident">stride</span>;
                 }
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>height</span> <span class='op'>=</span> <span class='number'>0</span>;
-                <span class='kw'>while</span> <span class='ident'>mask</span> <span class='op'>!=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='op'>*</span><span class='self'>self</span> <span class='kw-2'>&amp;</span> <span class='ident'>mask</span> <span class='op'>!=</span> <span class='number'>0</span> {
-                    <span class='ident'>mask</span> <span class='op'>&gt;&gt;=</span> <span class='ident'>stride</span>;
-                    <span class='ident'>height</span> <span class='op'>+=</span> <span class='number'>1</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">height</span> <span class="op">=</span> <span class="number">0</span>;
+                <span class="kw">while</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&amp;</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span> {
+                    <span class="ident">mask</span> <span class="op">&gt;&gt;=</span> <span class="ident">stride</span>;
+                    <span class="ident">height</span> <span class="op">+=</span> <span class="number">1</span>;
                 }
 
-                <span class='ident'>height</span>
+                <span class="ident">height</span>
             };
 
-            (<span class='ident'>width</span>, <span class='ident'>height</span>)
-        } <span class='kw'>else</span> {
-            (<span class='number'>0</span>, <span class='number'>0</span>)
+            (<span class="ident">width</span>, <span class="ident">height</span>)
+        } <span class="kw">else</span> {
+            (<span class="number">0</span>, <span class="number">0</span>)
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>grow</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>bounds</span>: <span class='ident'>Bitmap</span>, <span class='ident'>stride</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Bitmap</span> {
-        <span class='kw'>use</span> <span class='ident'>impls</span>::<span class='ident'>tak</span>::<span class='ident'>Direction</span>::<span class='op'>*</span>;
+    <span class="kw">fn</span> <span class="ident">grow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bounds</span>: <span class="ident">Bitmap</span>, <span class="ident">stride</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Bitmap</span> {
+        <span class="kw">use</span> <span class="ident">impls</span>::<span class="ident">tak</span>::<span class="ident">Direction</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>next</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
-        <span class='ident'>next</span> <span class='op'>|=</span> (<span class='op'>*</span><span class='self'>self</span> <span class='op'>&lt;&lt;</span> <span class='number'>1</span>) <span class='kw-2'>&amp;</span> <span class='op'>!</span><span class='ident'>EDGE</span>[<span class='ident'>stride</span>][<span class='ident'>East</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
-        <span class='ident'>next</span> <span class='op'>|=</span> (<span class='op'>*</span><span class='self'>self</span> <span class='op'>&gt;&gt;</span> <span class='number'>1</span>) <span class='kw-2'>&amp;</span> <span class='op'>!</span><span class='ident'>EDGE</span>[<span class='ident'>stride</span>][<span class='ident'>West</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
-        <span class='ident'>next</span> <span class='op'>|=</span> <span class='op'>*</span><span class='self'>self</span> <span class='op'>&lt;&lt;</span> <span class='ident'>stride</span>;
-        <span class='ident'>next</span> <span class='op'>|=</span> <span class='op'>*</span><span class='self'>self</span> <span class='op'>&gt;&gt;</span> <span class='ident'>stride</span>;
-        <span class='ident'>next</span> <span class='kw-2'>&amp;</span> <span class='ident'>bounds</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">next</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
+        <span class="ident">next</span> <span class="op">|=</span> (<span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>) <span class="op">&amp;</span> <span class="op">!</span><span class="ident">EDGE</span>[<span class="ident">stride</span>][<span class="ident">East</span> <span class="kw">as</span> <span class="ident">usize</span>];
+        <span class="ident">next</span> <span class="op">|=</span> (<span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;&gt;</span> <span class="number">1</span>) <span class="op">&amp;</span> <span class="op">!</span><span class="ident">EDGE</span>[<span class="ident">stride</span>][<span class="ident">West</span> <span class="kw">as</span> <span class="ident">usize</span>];
+        <span class="ident">next</span> <span class="op">|=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;&lt;</span> <span class="ident">stride</span>;
+        <span class="ident">next</span> <span class="op">|=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;&gt;</span> <span class="ident">stride</span>;
+        <span class="ident">next</span> <span class="op">&amp;</span> <span class="ident">bounds</span>
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>generate_edge_masks</span>() <span class='op'>-&gt;</span> [[<span class='ident'>Bitmap</span>; <span class='number'>4</span>]; <span class='number'>9</span>] {
-    <span class='kw'>use</span> <span class='ident'>impls</span>::<span class='ident'>tak</span>::<span class='ident'>Direction</span>::<span class='op'>*</span>;
+<span class="kw">fn</span> <span class="ident">generate_edge_masks</span>() <span class="op">-&gt;</span> [[<span class="ident">Bitmap</span>; <span class="number">4</span>]; <span class="number">9</span>] {
+    <span class="kw">use</span> <span class="ident">impls</span>::<span class="ident">tak</span>::<span class="ident">Direction</span>::<span class="kw-2">*</span>;
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>edge</span> <span class='op'>=</span> [[<span class='number'>0</span>; <span class='number'>4</span>]; <span class='number'>9</span>];
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">edge</span> <span class="op">=</span> [[<span class="number">0</span>; <span class="number">4</span>]; <span class="number">9</span>];
 
-    <span class='kw'>for</span> <span class='ident'>size</span> <span class='kw'>in</span> <span class='number'>3</span>..(<span class='number'>8</span> <span class='op'>+</span> <span class='number'>1</span>) {
-        <span class='kw'>for</span> <span class='ident'>y</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>size</span> {
-            <span class='ident'>edge</span>[<span class='ident'>size</span>][<span class='ident'>East</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>|=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> (<span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>size</span>);
+    <span class="kw">for</span> <span class="ident">size</span> <span class="kw">in</span> <span class="number">3</span>..(<span class="number">8</span> <span class="op">+</span> <span class="number">1</span>) {
+        <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">size</span> {
+            <span class="ident">edge</span>[<span class="ident">size</span>][<span class="ident">East</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">|=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> (<span class="ident">y</span> <span class="op">*</span> <span class="ident">size</span>);
         }
-        <span class='ident'>edge</span>[<span class='ident'>size</span>][<span class='ident'>West</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>=</span> <span class='ident'>edge</span>[<span class='ident'>size</span>][<span class='ident'>East</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>&lt;&lt;</span> (<span class='ident'>size</span> <span class='op'>-</span> <span class='number'>1</span>);
+        <span class="ident">edge</span>[<span class="ident">size</span>][<span class="ident">West</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">edge</span>[<span class="ident">size</span>][<span class="ident">East</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&lt;&lt;</span> (<span class="ident">size</span> <span class="op">-</span> <span class="number">1</span>);
 
-        <span class='ident'>edge</span>[<span class='ident'>size</span>][<span class='ident'>South</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>=</span> (<span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='ident'>size</span>) <span class='op'>-</span> <span class='number'>1</span>;
-        <span class='ident'>edge</span>[<span class='ident'>size</span>][<span class='ident'>North</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>=</span> <span class='ident'>edge</span>[<span class='ident'>size</span>][<span class='ident'>South</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>&lt;&lt;</span> (<span class='ident'>size</span> <span class='op'>*</span> (<span class='ident'>size</span> <span class='op'>-</span> <span class='number'>1</span>));
+        <span class="ident">edge</span>[<span class="ident">size</span>][<span class="ident">South</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="ident">size</span>) <span class="op">-</span> <span class="number">1</span>;
+        <span class="ident">edge</span>[<span class="ident">size</span>][<span class="ident">North</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">edge</span>[<span class="ident">size</span>][<span class="ident">South</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&lt;&lt;</span> (<span class="ident">size</span> <span class="op">*</span> (<span class="ident">size</span> <span class="op">-</span> <span class="number">1</span>));
     }
 
-    <span class='ident'>edge</span>
+    <span class="ident">edge</span>
 }
 
-<span class='kw'>fn</span> <span class='ident'>generate_board_masks</span>() <span class='op'>-&gt;</span> [<span class='ident'>Bitmap</span>; <span class='number'>9</span>] {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>board</span> <span class='op'>=</span> [<span class='number'>0</span>; <span class='number'>9</span>];
+<span class="kw">fn</span> <span class="ident">generate_board_masks</span>() <span class="op">-&gt;</span> [<span class="ident">Bitmap</span>; <span class="number">9</span>] {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">board</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">9</span>];
 
-    <span class='kw'>for</span> <span class='ident'>size</span> <span class='kw'>in</span> <span class='number'>3</span>..(<span class='number'>8</span> <span class='op'>+</span> <span class='number'>1</span>) {
-        <span class='ident'>board</span>[<span class='ident'>size</span>] <span class='op'>=</span> <span class='number'>0xFFFFFFFFFFFFFFFF</span> <span class='op'>&gt;&gt;</span> (<span class='number'>64</span> <span class='op'>-</span> <span class='ident'>size</span> <span class='op'>*</span> <span class='ident'>size</span>);
+    <span class="kw">for</span> <span class="ident">size</span> <span class="kw">in</span> <span class="number">3</span>..(<span class="number">8</span> <span class="op">+</span> <span class="number">1</span>) {
+        <span class="ident">board</span>[<span class="ident">size</span>] <span class="op">=</span> <span class="number">0xFFFFFFFFFFFFFFFF</span> <span class="op">&gt;&gt;</span> (<span class="number">64</span> <span class="op">-</span> <span class="ident">size</span> <span class="op">*</span> <span class="ident">size</span>);
     }
 
-    <span class='ident'>board</span>
-}
-
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='op'>*</span>;
-    <span class='kw'>use</span> <span class='ident'>test</span>::{<span class='self'>self</span>, <span class='ident'>Bencher</span>};
-
-    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bench_bitmap_get_groups</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
-        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
-            <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='number'>0x1BD837B</span>).<span class='ident'>get_groups</span>(<span class='number'>5</span>)
-        });
-    }
-
-    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bench_bitmap_get_population</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
-        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='number'>0</span>;
-            <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>20</span> {
-                <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='number'>0x1BD837B</span>).<span class='ident'>get_population</span>();
-            }
-            <span class='ident'>r</span>
-        });
-    }
-
-    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bench_bitmap_get_dimensions</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
-        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
-            <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='number'>0x739C0</span>).<span class='ident'>get_dimensions</span>(<span class='number'>5</span>)
-        });
-    }
-
-    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bench_bitmap_grow</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
-        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='number'>0</span>;
-            <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>10</span> {
-                <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='number'>0x50140</span>).<span class='ident'>grow</span>(<span class='ident'>BOARD</span>[<span class='number'>5</span>], <span class='number'>5</span>);
-            }
-            <span class='ident'>r</span>
-        });
-    }
+    <span class="ident">board</span>
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>zero_sum</a></p><script>window.sidebarCurrent = {name: 'Ply', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Ply</p><div class="block items"><ul><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>zero_sum</a></p><script>window.sidebarCurrent = {name: 'Ply', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,33 +43,33 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>zero_sum</a>::<wbr><a class='trait' href=''>Ply</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>zero_sum</a>::<wbr><a class="trait" href=''>Ply</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/zero_sum/ply.rs.html#47' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Ply: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> { }</pre><div class='docblock'><p>This trait marks a ply.</p>
+<pre class='rust trait'>pub trait Ply: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html" title="trait core::hash::Hash">Hash</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> { }</pre><div class='docblock'><p>This trait marks a ply.</p>
 
 <p>Implementors should implement Hash manually, writing only a single u64 to the hasher.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <p>For tic-tac-toe, we might have:</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>enum</span> <span class='ident'>Mark</span> { <span class='ident'>X</span>, <span class='ident'>O</span> }
+<pre class="rust rust-example-rendered">
+<span class="kw">enum</span> <span class="ident">Mark</span> { <span class="ident">X</span>, <span class="ident">O</span> }
 
-<span class='kw'>struct</span> <span class='ident'>Move</span> {
-    <span class='ident'>mark</span>: <span class='ident'>Mark</span>,
-    <span class='ident'>coords</span>: (<span class='ident'>usize</span>, <span class='ident'>usize</span>),
+<span class="kw">struct</span> <span class="ident">Move</span> {
+    <span class="ident">mark</span>: <span class="ident">Mark</span>,
+    <span class="ident">coords</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>Ply</span> <span class='kw'>for</span> <span class='ident'>Move</span> { }</pre>
+<span class="kw">impl</span> <span class="ident">Ply</span> <span class="kw">for</span> <span class="ident">Move</span> { }</pre>
 </div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl Ply for <a class='enum' href='../zero_sum/impls/tak/enum.Ply.html' title='zero_sum::impls::tak::Ply'>Ply</a></code></li>
-<li><code>impl Ply for <a class='struct' href='../zero_sum/impls/tic_tac_toe/struct.Ply.html' title='zero_sum::impls::tic_tac_toe::Ply'>Ply</a></code></li>
+    <li><code>impl Ply for zero_sum::impls::tak::<a class="enum" href="../zero_sum/impls/tak/enum.Ply.html" title="enum zero_sum::impls::tak::Ply">Ply</a></code></li>
+<li><code>impl Ply for zero_sum::impls::tic_tac_toe::<a class="struct" href="../zero_sum/impls/tic_tac_toe/struct.Ply.html" title="struct zero_sum::impls::tic_tac_toe::Ply">Ply</a></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/zero_sum/trait.Ply.js">
                  </script></section>

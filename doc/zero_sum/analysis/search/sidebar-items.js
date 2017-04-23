@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Analysis","The result of a search."],["PvSearch","A PVS implementation of `Search` with a few common optimizations."]],"trait":[["Search","Provides search capabilities"]]});
+initSidebarItems({"struct":[["PvSearch","A PVS implementation of `Search` with a few common optimizations."],["PvSearchAnalysis","The results of the PV search."]],"trait":[["Analysis","The results of the search."],["Search","Provides search capabilities."]]});
